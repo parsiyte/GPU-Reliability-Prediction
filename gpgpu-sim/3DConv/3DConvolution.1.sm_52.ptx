@@ -1,0 +1,97 @@
+
+
+
+
+
+
+
+
+.version 7.0
+.target sm_52
+.address_size 64
+
+
+
+.visible .entry _Z20convolution3D_kernelPfS_i(
+.param .u64 _Z20convolution3D_kernelPfS_i_param_0,
+.param .u64 _Z20convolution3D_kernelPfS_i_param_1,
+.param .u32 _Z20convolution3D_kernelPfS_i_param_2
+)
+{
+.reg .pred %p<12>;
+.reg .f32 %f<27>;
+.reg .b32 %r<15>;
+.reg .b64 %rd<10>;
+
+
+ld.param.u64 %rd1, [_Z20convolution3D_kernelPfS_i_param_0];
+ld.param.u64 %rd2, [_Z20convolution3D_kernelPfS_i_param_1];
+ld.param.u32 %r3, [_Z20convolution3D_kernelPfS_i_param_2];
+mov.u32 %r4, %ntid.x;
+mov.u32 %r5, %ctaid.x;
+mov.u32 %r6, %tid.x;
+mad.lo.s32 %r1, %r4, %r5, %r6;
+mov.u32 %r7, %ntid.y;
+mov.u32 %r8, %ctaid.y;
+mov.u32 %r9, %tid.y;
+mad.lo.s32 %r2, %r7, %r8, %r9;
+setp.lt.s32	%p1, %r2, 255;
+setp.lt.s32	%p2, %r3, 255;
+and.pred %p3, %p2, %p1;
+setp.lt.s32	%p4, %r1, 255;
+and.pred %p5, %p3, %p4;
+setp.gt.s32	%p6, %r3, 0;
+and.pred %p7, %p5, %p6;
+setp.gt.s32	%p8, %r2, 0;
+and.pred %p9, %p7, %p8;
+setp.gt.s32	%p10, %r1, 0;
+and.pred %p11, %p9, %p10;
+@!%p11 bra BB0_2;
+bra.uni BB0_1;
+
+BB0_1:
+cvta.to.global.u64 %rd3, %rd1;
+cvta.to.global.u64 %rd4, %rd2;
+shl.b32 %r10, %r3, 16;
+add.s32 %r11, %r1, %r10;
+shl.b32 %r12, %r2, 8;
+add.s32 %r13, %r11, %r12;
+add.s32 %r14, %r13, -65793;
+mul.wide.s32 %rd5, %r14, 4;
+add.s64 %rd6, %rd3, %rd5;
+ld.global.f32 %f1, [%rd6];
+ld.global.f32 %f2, [%rd6+524288];
+mul.f32 %f3, %f2, 0f40800000;
+fma.rn.f32 %f4, %f1, 0f40000000, %f3;
+fma.rn.f32 %f5, %f1, 0f40A00000, %f4;
+fma.rn.f32 %f6, %f2, 0f40E00000, %f5;
+fma.rn.f32 %f7, %f1, 0fC1000000, %f6;
+fma.rn.f32 %f8, %f2, 0f41200000, %f7;
+ld.global.f32 %f9, [%rd6+262148];
+fma.rn.f32 %f10, %f9, 0fC0400000, %f8;
+mul.wide.s32 %rd7, %r13, 4;
+add.s64 %rd8, %rd3, %rd7;
+ld.global.f32 %f11, [%rd8];
+fma.rn.f32 %f12, %f11, 0f40C00000, %f10;
+ld.global.f32 %f13, [%rd6+264196];
+fma.rn.f32 %f14, %f13, 0fC1100000, %f12;
+ld.global.f32 %f15, [%rd6+8];
+fma.rn.f32 %f16, %f15, 0f40000000, %f14;
+ld.global.f32 %f17, [%rd6+524296];
+fma.rn.f32 %f18, %f17, 0f40800000, %f16;
+ld.global.f32 %f19, [%rd6+1032];
+fma.rn.f32 %f20, %f19, 0f40A00000, %f18;
+ld.global.f32 %f21, [%rd6+525320];
+fma.rn.f32 %f22, %f21, 0f40E00000, %f20;
+ld.global.f32 %f23, [%rd6+2056];
+fma.rn.f32 %f24, %f23, 0fC1000000, %f22;
+ld.global.f32 %f25, [%rd6+526344];
+fma.rn.f32 %f26, %f25, 0f41200000, %f24;
+add.s64 %rd9, %rd4, %rd7;
+st.global.f32 [%rd9], %f26;
+
+BB0_2:
+ret;
+}
+
+

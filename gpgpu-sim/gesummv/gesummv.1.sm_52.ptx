@@ -1,0 +1,153 @@
+
+
+
+
+
+
+
+
+.version 7.0
+.target sm_52
+.address_size 64
+
+
+
+.visible .entry _Z14gesummv_kernelPfS_S_S_S_(
+.param .u64 _Z14gesummv_kernelPfS_S_S_S__param_0,
+.param .u64 _Z14gesummv_kernelPfS_S_S_S__param_1,
+.param .u64 _Z14gesummv_kernelPfS_S_S_S__param_2,
+.param .u64 _Z14gesummv_kernelPfS_S_S_S__param_3,
+.param .u64 _Z14gesummv_kernelPfS_S_S_S__param_4
+)
+{
+.reg .pred %p<3>;
+.reg .f32 %f<68>;
+.reg .b32 %r<12>;
+.reg .b64 %rd<23>;
+
+
+ld.param.u64 %rd11, [_Z14gesummv_kernelPfS_S_S_S__param_0];
+ld.param.u64 %rd12, [_Z14gesummv_kernelPfS_S_S_S__param_1];
+ld.param.u64 %rd13, [_Z14gesummv_kernelPfS_S_S_S__param_2];
+ld.param.u64 %rd14, [_Z14gesummv_kernelPfS_S_S_S__param_3];
+ld.param.u64 %rd15, [_Z14gesummv_kernelPfS_S_S_S__param_4];
+mov.u32 %r1, %ntid.x;
+mov.u32 %r2, %ctaid.x;
+mov.u32 %r3, %tid.x;
+mad.lo.s32 %r4, %r1, %r2, %r3;
+setp.gt.s32	%p1, %r4, 4095;
+@%p1 bra BB0_4;
+
+cvta.to.global.u64 %rd16, %rd15;
+mul.wide.s32 %rd17, %r4, 4;
+add.s64 %rd1, %rd16, %rd17;
+cvta.to.global.u64 %rd18, %rd14;
+add.s64 %rd2, %rd18, %rd17;
+mul.lo.s32 %r8, %r1, %r2;
+shl.b32 %r9, %r8, 12;
+mad.lo.s32 %r10, %r3, 4096, %r9;
+mul.wide.s32 %rd21, %r10, 4;
+cvta.to.global.u64 %rd4, %rd11;
+cvta.to.global.u64 %rd22, %rd13;
+cvta.to.global.u64 %rd6, %rd12;
+mov.u32 %r11, -4096;
+
+BB0_2:
+add.s64 %rd19, %rd4, %rd21;
+ld.global.f32 %f2, [%rd22];
+ld.global.f32 %f3, [%rd19];
+ld.global.f32 %f4, [%rd1];
+fma.rn.f32 %f5, %f3, %f2, %f4;
+st.global.f32 [%rd1], %f5;
+add.s64 %rd20, %rd6, %rd21;
+ld.global.f32 %f6, [%rd22];
+ld.global.f32 %f7, [%rd20];
+ld.global.f32 %f8, [%rd2];
+fma.rn.f32 %f9, %f7, %f6, %f8;
+st.global.f32 [%rd2], %f9;
+ld.global.f32 %f10, [%rd22+4];
+ld.global.f32 %f11, [%rd19+4];
+ld.global.f32 %f12, [%rd1];
+fma.rn.f32 %f13, %f11, %f10, %f12;
+st.global.f32 [%rd1], %f13;
+ld.global.f32 %f14, [%rd22+4];
+ld.global.f32 %f15, [%rd20+4];
+ld.global.f32 %f16, [%rd2];
+fma.rn.f32 %f17, %f15, %f14, %f16;
+st.global.f32 [%rd2], %f17;
+ld.global.f32 %f18, [%rd22+8];
+ld.global.f32 %f19, [%rd19+8];
+ld.global.f32 %f20, [%rd1];
+fma.rn.f32 %f21, %f19, %f18, %f20;
+st.global.f32 [%rd1], %f21;
+ld.global.f32 %f22, [%rd22+8];
+ld.global.f32 %f23, [%rd20+8];
+ld.global.f32 %f24, [%rd2];
+fma.rn.f32 %f25, %f23, %f22, %f24;
+st.global.f32 [%rd2], %f25;
+ld.global.f32 %f26, [%rd22+12];
+ld.global.f32 %f27, [%rd19+12];
+ld.global.f32 %f28, [%rd1];
+fma.rn.f32 %f29, %f27, %f26, %f28;
+st.global.f32 [%rd1], %f29;
+ld.global.f32 %f30, [%rd22+12];
+ld.global.f32 %f31, [%rd20+12];
+ld.global.f32 %f32, [%rd2];
+fma.rn.f32 %f33, %f31, %f30, %f32;
+st.global.f32 [%rd2], %f33;
+ld.global.f32 %f34, [%rd22+16];
+ld.global.f32 %f35, [%rd19+16];
+ld.global.f32 %f36, [%rd1];
+fma.rn.f32 %f37, %f35, %f34, %f36;
+st.global.f32 [%rd1], %f37;
+ld.global.f32 %f38, [%rd22+16];
+ld.global.f32 %f39, [%rd20+16];
+ld.global.f32 %f40, [%rd2];
+fma.rn.f32 %f41, %f39, %f38, %f40;
+st.global.f32 [%rd2], %f41;
+ld.global.f32 %f42, [%rd22+20];
+ld.global.f32 %f43, [%rd19+20];
+ld.global.f32 %f44, [%rd1];
+fma.rn.f32 %f45, %f43, %f42, %f44;
+st.global.f32 [%rd1], %f45;
+ld.global.f32 %f46, [%rd22+20];
+ld.global.f32 %f47, [%rd20+20];
+ld.global.f32 %f48, [%rd2];
+fma.rn.f32 %f49, %f47, %f46, %f48;
+st.global.f32 [%rd2], %f49;
+ld.global.f32 %f50, [%rd22+24];
+ld.global.f32 %f51, [%rd19+24];
+ld.global.f32 %f52, [%rd1];
+fma.rn.f32 %f53, %f51, %f50, %f52;
+st.global.f32 [%rd1], %f53;
+ld.global.f32 %f54, [%rd22+24];
+ld.global.f32 %f55, [%rd20+24];
+ld.global.f32 %f56, [%rd2];
+fma.rn.f32 %f57, %f55, %f54, %f56;
+st.global.f32 [%rd2], %f57;
+ld.global.f32 %f58, [%rd22+28];
+ld.global.f32 %f59, [%rd19+28];
+ld.global.f32 %f60, [%rd1];
+fma.rn.f32 %f61, %f59, %f58, %f60;
+st.global.f32 [%rd1], %f61;
+ld.global.f32 %f62, [%rd22+28];
+ld.global.f32 %f63, [%rd20+28];
+ld.global.f32 %f64, [%rd2];
+fma.rn.f32 %f1, %f63, %f62, %f64;
+st.global.f32 [%rd2], %f1;
+add.s64 %rd22, %rd22, 32;
+add.s64 %rd21, %rd21, 32;
+add.s32 %r11, %r11, 8;
+setp.ne.s32	%p2, %r11, 0;
+@%p2 bra BB0_2;
+
+ld.global.f32 %f65, [%rd1];
+mul.f32 %f66, %f1, 0f46406400;
+fma.rn.f32 %f67, %f65, 0f472A0C00, %f66;
+st.global.f32 [%rd2], %f67;
+
+BB0_4:
+ret;
+}
+
+

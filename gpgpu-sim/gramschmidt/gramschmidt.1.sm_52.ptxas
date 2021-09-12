@@ -1,0 +1,13 @@
+ptxas info    : 0 bytes gmem
+ptxas info    : Compiling entry function '_Z19gramschmidt_kernel3PfS_S_i' for 'sm_52'
+ptxas info    : Function properties for _Z19gramschmidt_kernel3PfS_S_i
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 24 registers, 348 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z19gramschmidt_kernel2PfS_S_i' for 'sm_52'
+ptxas info    : Function properties for _Z19gramschmidt_kernel2PfS_S_i
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 13 registers, 348 bytes cmem[0], 12 bytes cmem[2]
+ptxas info    : Compiling entry function '_Z19gramschmidt_kernel1PfS_S_i' for 'sm_52'
+ptxas info    : Function properties for _Z19gramschmidt_kernel1PfS_S_i
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 23 registers, 348 bytes cmem[0], 8 bytes cmem[2]

@@ -1,0 +1,9 @@
+ptxas info    : 0 bytes gmem
+ptxas info    : Compiling entry function '_Z11mm2_kernel2PfS_S_' for 'sm_52'
+ptxas info    : Function properties for _Z11mm2_kernel2PfS_S_
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 24 registers, 344 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z11mm2_kernel1PfS_S_' for 'sm_52'
+ptxas info    : Function properties for _Z11mm2_kernel1PfS_S_
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 24 registers, 344 bytes cmem[0]

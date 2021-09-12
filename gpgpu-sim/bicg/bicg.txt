@@ -1,0 +1,1596 @@
+
+
+        *** GPGPU-Sim Simulator Version 4.0.0  [build gpgpu-sim_git-commit-90ec3399763d7c8512cfe7dc193473086c38ca38_modified_4.0] ***
+
+
+GPGPU-Sim PTX: simulation mode 0 (can change with PTX_SIM_MODE_FUNC environment variable:
+               1=functional simulation only, 0=detailed performance simulator)
+GPGPU-Sim PTX: overriding embedded ptx with ptx file (PTX_SIM_USE_PTX_FILE is set)
+GPGPU-Sim: Configuration options:
+
+-save_embedded_ptx                      0 # saves ptx files embedded in binary as <n>.ptx
+-keep                                   0 # keep intermediate files created by GPGPU-Sim when interfacing with external programs
+-gpgpu_ptx_save_converted_ptxplus                    0 # Saved converted ptxplus to a file
+-gpgpu_occupancy_sm_number                  128 # The SM number to pass to ptxas when getting register usage for computing GPU occupancy. This parameter is required in the config.
+-ptx_opcode_latency_int      4,13,4,5,145,32 # Opcode latencies for integers <ADD,MAX,MUL,MAD,DIV,SHFL>Default 1,1,19,25,145,32
+-ptx_opcode_latency_fp          4,13,4,4,39 # Opcode latencies for single precision floating points <ADD,MAX,MUL,MAD,DIV>Default 1,1,1,1,30
+-ptx_opcode_latency_dp         8,19,8,8,330 # Opcode latencies for double precision floating points <ADD,MAX,MUL,MAD,DIV>Default 8,8,8,8,335
+-ptx_opcode_latency_sfu                   20 # Opcode latencies for SFU instructionsDefault 8
+-ptx_opcode_latency_tesnor                   64 # Opcode latencies for Tensor instructionsDefault 64
+-ptx_opcode_initiation_int          1,1,1,1,4,4 # Opcode initiation intervals for integers <ADD,MAX,MUL,MAD,DIV,SHFL>Default 1,1,4,4,32,4
+-ptx_opcode_initiation_fp            1,2,1,1,4 # Opcode initiation intervals for single precision floating points <ADD,MAX,MUL,MAD,DIV>Default 1,1,1,1,5
+-ptx_opcode_initiation_dp          8,8,8,8,130 # Opcode initiation intervals for double precision floating points <ADD,MAX,MUL,MAD,DIV>Default 8,8,8,8,130
+-ptx_opcode_initiation_sfu                    4 # Opcode initiation intervals for sfu instructionsDefault 8
+-ptx_opcode_initiation_tensor                   64 # Opcode initiation intervals for tensor instructionsDefault 64
+-cdp_latency         7200,8000,100,12000,1600 # CDP API latency <cudaStreamCreateWithFlags, cudaGetParameterBufferV2_init_perWarp, cudaGetParameterBufferV2_perKernel, cudaLaunchDeviceV2_init_perWarp, cudaLaunchDevicV2_perKernel>Default 7200,8000,100,12000,1600
+-network_mode                           1 # Interconnection network mode
+-inter_config_file   config_pascal_islip.icnt # Interconnection network config file
+-icnt_in_buffer_limit                   64 # in_buffer_limit
+-icnt_out_buffer_limit                   64 # out_buffer_limit
+-icnt_subnets                           2 # subnets
+-icnt_arbiter_algo                      1 # arbiter_algo
+-icnt_verbose                           0 # inct_verbose
+-icnt_grant_cycles                      1 # grant_cycles
+-gpgpu_ptx_use_cuobjdump                    1 # Use cuobjdump to extract ptx and sass from binaries
+-gpgpu_experimental_lib_support                    0 # Try to extract code from cuda libraries [Broken because of unknown cudaGetExportTable]
+-checkpoint_option                      0 #  checkpointing flag (0 = no checkpoint)
+-checkpoint_kernel                      1 #  checkpointing during execution of which kernel (1- 1st kernel)
+-checkpoint_CTA                         0 #  checkpointing after # of CTA (< less than total CTA)
+-resume_option                          0 #  resume flag (0 = no resume)
+-resume_kernel                          0 #  Resume from which kernel (1= 1st kernel)
+-resume_CTA                             0 #  resume from which CTA 
+-checkpoint_CTA_t                       0 #  resume from which CTA 
+-checkpoint_insn_Y                      0 #  resume from which CTA 
+-gpgpu_ptx_convert_to_ptxplus                    0 # Convert SASS (native ISA) to ptxplus and run ptxplus
+-gpgpu_ptx_force_max_capability                   61 # Force maximum compute capability
+-gpgpu_ptx_inst_debug_to_file                    0 # Dump executed instructions' debug information to file
+-gpgpu_ptx_inst_debug_file       inst_debug.txt # Executed instructions' debug output file
+-gpgpu_ptx_inst_debug_thread_uid                    1 # Thread UID for executed instructions' debug output
+-gpgpu_simd_model                       1 # 1 = post-dominator
+-gpgpu_shader_core_pipeline              2048:32 # shader core pipeline config, i.e., {<nthread>:<warpsize>}
+-gpgpu_tex_cache:l1  N:16:128:24,L:R:m:N:L,T:128:4,128:2 # per-shader L1 texture cache  (READ-ONLY) config  {<nsets>:<bsize>:<assoc>,<rep>:<wr>:<alloc>:<wr_alloc>,<mshr>:<N>:<merge>,<mq>:<rf>}
+-gpgpu_const_cache:l1 N:512:64:2,L:R:f:N:L,S:2:64,4 # per-shader L1 constant memory cache  (READ-ONLY) config  {<nsets>:<bsize>:<assoc>,<rep>:<wr>:<alloc>:<wr_alloc>,<mshr>:<N>:<merge>,<mq>} 
+-gpgpu_cache:il1     N:8:128:4,L:R:f:N:L,S:2:48,4 # shader L1 instruction cache config  {<nsets>:<bsize>:<assoc>,<rep>:<wr>:<alloc>:<wr_alloc>,<mshr>:<N>:<merge>,<mq>} 
+-gpgpu_cache:dl1     S:4:128:96,L:L:s:N:L,A:256:8,16:0,32 # per-shader L1 data cache config  {<nsets>:<bsize>:<assoc>,<rep>:<wr>:<alloc>:<wr_alloc>,<mshr>:<N>:<merge>,<mq> | none}
+-gpgpu_l1_banks                         2 # The number of L1 cache banks
+-gpgpu_l1_banks_byte_interleaving                   32 # l1 banks byte interleaving granularity
+-gpgpu_l1_banks_hashing_function                    0 # l1 banks hashing function
+-gpgpu_l1_latency                      82 # L1 Hit Latency
+-gpgpu_smem_latency                    24 # smem Latency
+-gpgpu_cache:dl1PrefL1 S:4:128:96,L:L:s:N:L,A:256:8,16:0,32 # per-shader L1 data cache config  {<nsets>:<bsize>:<assoc>,<rep>:<wr>:<alloc>:<wr_alloc>,<mshr>:<N>:<merge>,<mq> | none}
+-gpgpu_cache:dl1PrefShared S:4:128:96,L:L:s:N:L,A:256:8,16:0,32 # per-shader L1 data cache config  {<nsets>:<bsize>:<assoc>,<rep>:<wr>:<alloc>:<wr_alloc>,<mshr>:<N>:<merge>,<mq> | none}
+-gpgpu_gmem_skip_L1D                    1 # global memory access skip L1D cache (implements -Xptxas -dlcm=cg, default=no skip)
+-gpgpu_perfect_mem                      0 # enable perfect memory mode (no cache miss)
+-n_regfile_gating_group                    4 # group of lanes that should be read/written together)
+-gpgpu_clock_gated_reg_file                    0 # enable clock gated reg file for power calculations
+-gpgpu_clock_gated_lanes                    0 # enable clock gated lanes for power calculations
+-gpgpu_shader_registers                65536 # Number of registers per shader core. Limits number of concurrent CTAs. (default 8192)
+-gpgpu_registers_per_block                 8192 # Maximum number of registers per CTA. (default 8192)
+-gpgpu_ignore_resources_limitation                    1 # gpgpu_ignore_resources_limitation (default 0)
+-gpgpu_shader_cta                      32 # Maximum number of concurrent CTAs in shader (default 8)
+-gpgpu_num_cta_barriers                   16 # Maximum number of named barriers per CTA (default 16)
+-gpgpu_n_clusters                       1 # number of processing clusters
+-gpgpu_n_cores_per_cluster                   14 # number of simd cores per cluster
+-gpgpu_n_cluster_ejection_buffer_size                   32 # number of packets in ejection buffer
+-gpgpu_n_ldst_response_buffer_size                    2 # number of response packets in ld/st unit ejection buffer
+-gpgpu_shmem_per_block                49152 # Size of shared memory per thread block or CTA (default 48kB)
+-gpgpu_shmem_size                   98304 # Size of shared memory per shader core (default 16kB)
+-gpgpu_adaptive_cache_config                    0 # adaptive_cache_config
+-gpgpu_shmem_sizeDefault                98304 # Size of shared memory per shader core (default 16kB)
+-gpgpu_shmem_size_PrefL1                98304 # Size of shared memory per shader core (default 16kB)
+-gpgpu_shmem_size_PrefShared                98304 # Size of shared memory per shader core (default 16kB)
+-gpgpu_shmem_num_banks                   32 # Number of banks in the shared memory in each shader core (default 16)
+-gpgpu_shmem_limited_broadcast                    0 # Limit shared memory to do one broadcast per cycle (default on)
+-gpgpu_shmem_warp_parts                    1 # Number of portions a warp is divided into for shared memory bank conflict check 
+-gpgpu_mem_unit_ports                    1 # The number of memory transactions allowed per core cycle
+-gpgpu_shmem_warp_parts                    1 # Number of portions a warp is divided into for shared memory bank conflict check 
+-gpgpu_warpdistro_shader                   -1 # Specify which shader core to collect the warp size distribution from
+-gpgpu_warp_issue_shader                    0 # Specify which shader core to collect the warp issue distribution from
+-gpgpu_local_mem_map                    1 # Mapping from local memory space address to simulated GPU physical address space (default = enabled)
+-gpgpu_num_reg_banks                   16 # Number of register banks (default = 8)
+-gpgpu_reg_bank_use_warp_id                    0 # Use warp ID in mapping registers to banks (default = off)
+-gpgpu_sub_core_model                    1 # Sub Core Volta/Pascal model (default = off)
+-gpgpu_enable_specialized_operand_collector                    0 # enable_specialized_operand_collector
+-gpgpu_operand_collector_num_units_sp                    4 # number of collector units (default = 4)
+-gpgpu_operand_collector_num_units_dp                    0 # number of collector units (default = 0)
+-gpgpu_operand_collector_num_units_sfu                    4 # number of collector units (default = 4)
+-gpgpu_operand_collector_num_units_int                    0 # number of collector units (default = 0)
+-gpgpu_operand_collector_num_units_tensor_core                    4 # number of collector units (default = 4)
+-gpgpu_operand_collector_num_units_mem                    2 # number of collector units (default = 2)
+-gpgpu_operand_collector_num_units_gen                    8 # number of collector units (default = 0)
+-gpgpu_operand_collector_num_in_ports_sp                    1 # number of collector unit in ports (default = 1)
+-gpgpu_operand_collector_num_in_ports_dp                    0 # number of collector unit in ports (default = 0)
+-gpgpu_operand_collector_num_in_ports_sfu                    1 # number of collector unit in ports (default = 1)
+-gpgpu_operand_collector_num_in_ports_int                    0 # number of collector unit in ports (default = 0)
+-gpgpu_operand_collector_num_in_ports_tensor_core                    1 # number of collector unit in ports (default = 1)
+-gpgpu_operand_collector_num_in_ports_mem                    1 # number of collector unit in ports (default = 1)
+-gpgpu_operand_collector_num_in_ports_gen                    8 # number of collector unit in ports (default = 0)
+-gpgpu_operand_collector_num_out_ports_sp                    1 # number of collector unit in ports (default = 1)
+-gpgpu_operand_collector_num_out_ports_dp                    0 # number of collector unit in ports (default = 0)
+-gpgpu_operand_collector_num_out_ports_sfu                    1 # number of collector unit in ports (default = 1)
+-gpgpu_operand_collector_num_out_ports_int                    0 # number of collector unit in ports (default = 0)
+-gpgpu_operand_collector_num_out_ports_tensor_core                    1 # number of collector unit in ports (default = 1)
+-gpgpu_operand_collector_num_out_ports_mem                    1 # number of collector unit in ports (default = 1)
+-gpgpu_operand_collector_num_out_ports_gen                    8 # number of collector unit in ports (default = 0)
+-gpgpu_coalesce_arch                   61 # Coalescing arch (GT200 = 13, Fermi = 20)
+-gpgpu_num_sched_per_core                    4 # Number of warp schedulers per core
+-gpgpu_max_insn_issue_per_warp                    2 # Max number of instructions that can be issued per warp in one cycle by scheduler (either 1 or 2)
+-gpgpu_dual_issue_diff_exec_units                    1 # should dual issue use two different execution unit resources (Default = 1)
+-gpgpu_simt_core_sim_order                    1 # Select the simulation order of cores in a cluster (0=Fix, 1=Round-Robin)
+-gpgpu_pipeline_widths 4,0,0,4,4,4,0,0,4,4,8 # Pipeline widths ID_OC_SP,ID_OC_DP,ID_OC_INT,ID_OC_SFU,ID_OC_MEM,OC_EX_SP,OC_EX_DP,OC_EX_INT,OC_EX_SFU,OC_EX_MEM,EX_WB,ID_OC_TENSOR_CORE,OC_EX_TENSOR_CORE
+-gpgpu_tensor_core_avail                    0 # Tensor Core Available (default=0)
+-gpgpu_num_sp_units                     4 # Number of SP units (default=1)
+-gpgpu_num_dp_units                     0 # Number of DP units (default=0)
+-gpgpu_num_int_units                    0 # Number of INT units (default=0)
+-gpgpu_num_sfu_units                    4 # Number of SF units (default=1)
+-gpgpu_num_tensor_core_units                    0 # Number of tensor_core units (default=1)
+-gpgpu_num_mem_units                    1 # Number if ldst units (default=1) WARNING: not hooked up to anything
+-gpgpu_scheduler                      gto # Scheduler configuration: < lrr | gto | two_level_active > If two_level_active:<num_active_warps>:<inner_prioritization>:<outer_prioritization>For complete list of prioritization values see shader.h enum scheduler_prioritization_typeDefault: gto
+-gpgpu_concurrent_kernel_sm                    0 # Support concurrent kernels on a SM (default = disabled)
+-gpgpu_perfect_inst_const_cache                    1 # perfect inst and const cache mode, so all inst and const hits in the cache(default = disabled)
+-gpgpu_inst_fetch_throughput                    8 # the number of fetched intruction per warp each cycle
+-gpgpu_reg_file_port_throughput                    2 # the number ports of the register file
+-specialized_unit_1         0,4,4,4,4,BRA # specialized unit config {<enabled>,<num_units>:<latency>:<initiation>,<ID_OC_SPEC>:<OC_EX_SPEC>,<NAME>}
+-specialized_unit_2         0,4,4,4,4,BRA # specialized unit config {<enabled>,<num_units>:<latency>:<initiation>,<ID_OC_SPEC>:<OC_EX_SPEC>,<NAME>}
+-specialized_unit_3         0,4,4,4,4,BRA # specialized unit config {<enabled>,<num_units>:<latency>:<initiation>,<ID_OC_SPEC>:<OC_EX_SPEC>,<NAME>}
+-specialized_unit_4         0,4,4,4,4,BRA # specialized unit config {<enabled>,<num_units>:<latency>:<initiation>,<ID_OC_SPEC>:<OC_EX_SPEC>,<NAME>}
+-specialized_unit_5         0,4,4,4,4,BRA # specialized unit config {<enabled>,<num_units>:<latency>:<initiation>,<ID_OC_SPEC>:<OC_EX_SPEC>,<NAME>}
+-specialized_unit_6         0,4,4,4,4,BRA # specialized unit config {<enabled>,<num_units>:<latency>:<initiation>,<ID_OC_SPEC>:<OC_EX_SPEC>,<NAME>}
+-specialized_unit_7         0,4,4,4,4,BRA # specialized unit config {<enabled>,<num_units>:<latency>:<initiation>,<ID_OC_SPEC>:<OC_EX_SPEC>,<NAME>}
+-specialized_unit_8         0,4,4,4,4,BRA # specialized unit config {<enabled>,<num_units>:<latency>:<initiation>,<ID_OC_SPEC>:<OC_EX_SPEC>,<NAME>}
+-gpgpu_perf_sim_memcpy                    1 # Fill the L2 cache on memcpy
+-gpgpu_simple_dram_model                    0 # simple_dram_model with fixed latency and BW
+-gpgpu_dram_scheduler                    1 # 0 = fifo, 1 = FR-FCFS (defaul)
+-gpgpu_dram_partition_queues          32:32:32:32 # i2$:$2d:d2$:$2i
+-l2_ideal                               0 # Use a ideal L2 cache that always hit
+-gpgpu_cache:dl2     S:64:128:256,L:B:m:L:P,A:256:64,16:0,32 # unified banked L2 data cache config  {<nsets>:<bsize>:<assoc>,<rep>:<wr>:<alloc>:<wr_alloc>,<mshr>:<N>:<merge>,<mq>}
+-gpgpu_cache:dl2_texture_only                    0 # L2 cache used for texture only
+-gpgpu_n_mem                            8 # number of memory modules (e.g. memory controllers) in gpu
+-gpgpu_n_sub_partition_per_mchannel                    2 # number of memory subpartition in each memory module
+-gpgpu_n_mem_per_ctrlr                    1 # number of memory chips per memory controller
+-gpgpu_memlatency_stat                   14 # track and display latency statistics 0x2 enables MC, 0x4 enables queue logs
+-gpgpu_frfcfs_dram_sched_queue_size                   64 # 0 = unlimited (default); # entries per chip
+-gpgpu_dram_return_queue_size                   64 # 0 = unlimited (default); # entries per chip
+-gpgpu_dram_buswidth                    4 # default = 4 bytes (8 bytes per cycle at DDR)
+-gpgpu_dram_burst_length                    8 # Burst length of each DRAM request (default = 4 data bus cycle)
+-dram_data_command_freq_ratio                    4 # Frequency ratio between DRAM data bus and command bus (default = 2 times, i.e. DDR)
+-gpgpu_dram_timing_opt nbk=16:CCD=2:RRD=8:RCD=16:RAS=37:RP=16:RC=52: CL=16:WL=6:CDLR=7:WR=16:nbkgrp=4:CCDL=4:RTPL=3 # DRAM timing parameters = {nbk:tCCD:tRRD:tRCD:tRAS:tRP:tRC:CL:WL:tCDLR:tWR:nbkgrp:tCCDL:tRTPL}
+-gpgpu_l2_rop_latency                  120 # ROP queue latency (default 85)
+-dram_latency                         100 # DRAM latency (default 30)
+-dram_dual_bus_interface                    0 # dual_bus_interface (default = 0) 
+-dram_bnk_indexing_policy                    0 # dram_bnk_indexing_policy (0 = normal indexing, 1 = Xoring with the higher bits) (Default = 0)
+-dram_bnkgrp_indexing_policy                    1 # dram_bnkgrp_indexing_policy (0 = take higher bits, 1 = take lower bits) (Default = 0)
+-dram_seperate_write_queue_enable                    0 # Seperate_Write_Queue_Enable
+-dram_write_queue_size             32:28:16 # Write_Queue_Size
+-dram_elimnate_rw_turnaround                    0 # elimnate_rw_turnaround i.e set tWTR and tRTW = 0
+-icnt_flit_size                        40 # icnt_flit_size
+-gpgpu_mem_addr_mapping dramid@8;00000000.00000000.00000000.00000000.0000RRRR.RRRRRRRR.RBBBCCCC.BCCSSSSS # mapping memory address to dram model {dramid@<start bit>;<memory address map>}
+-gpgpu_mem_addr_test                    0 # run sweep test to check address mapping for aliased address
+-gpgpu_mem_address_mask                    1 # 0 = old addressing mask, 1 = new addressing mask, 2 = new add. mask + flipped bank sel and chip sel bits
+-gpgpu_memory_partition_indexing                    0 # 0 = no indexing, 1 = bitwise xoring, 2 = IPoly, 3 = custom indexing
+-gpuwattch_xml_file         gpuwattch.xml # GPUWattch XML file
+-power_simulation_enabled                    0 # Turn on power simulator (1=On, 0=Off)
+-power_per_cycle_dump                    0 # Dump detailed power output each cycle
+-power_trace_enabled                    0 # produce a file for the power trace (1=On, 0=Off)
+-power_trace_zlevel                     6 # Compression level of the power trace output log (0=no comp, 9=highest)
+-steady_power_levels_enabled                    0 # produce a file for the steady power levels (1=On, 0=Off)
+-steady_state_definition                  8:4 # allowed deviation:number of samples
+-gpgpu_max_cycle                        0 # terminates gpu simulation early (0 = no limit)
+-gpgpu_max_insn                         0 # terminates gpu simulation early (0 = no limit)
+-gpgpu_max_cta                          0 # terminates gpu simulation early (0 = no limit)
+-gpgpu_max_completed_cta                    0 # terminates gpu simulation early (0 = no limit)
+-gpgpu_runtime_stat                   500 # display runtime statistics such as dram utilization {<freq>:<flag>}
+-liveness_message_freq                    1 # Minimum number of seconds between simulation liveness messages (0 = always print)
+-gpgpu_compute_capability_major                    6 # Major compute capability version number
+-gpgpu_compute_capability_minor                    1 # Minor compute capability version number
+-gpgpu_flush_l1_cache                    1 # Flush L1 cache at the end of each kernel call
+-gpgpu_flush_l2_cache                    0 # Flush L2 cache at the end of each kernel call
+-gpgpu_deadlock_detect                    1 # Stop the simulation at deadlock (1=on (default), 0=off)
+-gpgpu_ptx_instruction_classification                    0 # if enabled will classify ptx instruction types per kernel (Max 255 kernels now)
+-gpgpu_ptx_sim_mode                     0 # Select between Performance (default) or Functional simulation (1)
+-gpgpu_clock_domains 1480.0:1480.0:1480.0:3802.0 # Clock Domain Frequencies in MhZ {<Core Clock>:<ICNT Clock>:<L2 Clock>:<DRAM Clock>}
+-gpgpu_max_concurrent_kernel                    8 # maximum kernels that can run concurrently on GPU
+-gpgpu_cflog_interval                    0 # Interval between each snapshot in control flow logger
+-visualizer_enabled                     0 # Turn on visualizer output (1=On, 0=Off)
+-visualizer_outputfile                 NULL # Specifies the output log file for visualizer
+-visualizer_zlevel                      6 # Compression level of the visualizer output log (0=no comp, 9=highest)
+-gpgpu_stack_size_limit                 1024 # GPU thread stack size
+-gpgpu_heap_size_limit             95a8648f832472ad913b59ac26fb5d1b  /home/burak/gpgpu-sim-4.0/gpgpu-sim_distribution/bicg
+Extracting PTX file and ptxas options    1: bicg.1.sm_52.ptx -arch=sm_52
+ 8388608 # GPU malloc heap size 
+-gpgpu_runtime_sync_depth_limit                    2 # GPU device runtime synchronize depth
+-gpgpu_runtime_pending_launch_count_limit                 2048 # GPU device runtime pending launch count
+-trace_enabled                          0 # Turn on traces
+-trace_components                    none # comma seperated list of traces to enable. Complete list found in trace_streams.tup. Default none
+-trace_sampling_core                    0 # The core which is printed using CORE_DPRINTF. Default 0
+-trace_sampling_memory_partition                   -1 # The memory partition which is printed using MEMPART_DPRINTF. Default -1 (i.e. all)
+-enable_ptx_file_line_stats                    1 # Turn on PTX source line statistic profiling. (1 = On)
+-ptx_line_stats_filename gpgpu_inst_stats.txt # Output file for PTX source line statistics.
+-gpgpu_kernel_launch_latency                 5000 # Kernel launch latency in cycles. Default: 0
+-gpgpu_cdp_enabled                      0 # Turn on CDP
+-gpgpu_TB_launch_latency                    0 # thread block launch latency in cycles. Default: 0
+DRAM Timing Options:
+nbk                                    16 # number of banks
+CCD                                     2 # column to column delay
+RRD                                     8 # minimal delay between activation of rows in different banks
+RCD                                    16 # row to column delay
+RAS                                    37 # time needed to activate row
+RP                                     16 # time needed to precharge (deactivate) row
+RC                                     52 # row cycle time
+CDLR                                    7 # switching from write to read (changes tWTR)
+WR                                     16 # last data-in to row precharge
+CL                                     16 # CAS latency
+WL                                      6 # Write latency
+nbkgrp                                  4 # number of bank groups
+CCDL                                    4 # column to column delay between accesses to different bank groups
+RTPL                                    3 # read to precharge delay between accesses to different bank groups
+Total number of memory sub partition = 16
+addr_dec_mask[CHIP]  = 0000000000000700 	high:11 low:8
+addr_dec_mask[BK]    = 0000000000038080 	high:18 low:7
+addr_dec_mask[ROW]   = 000000007ffc0000 	high:31 low:18
+addr_dec_mask[COL]   = 000000000000787f 	high:15 low:0
+addr_dec_mask[BURST] = 000000000000001f 	high:5 low:0
+sub_partition_id_mask = 0000000000000080
+self exe links to: /home/burak/gpgpu-sim-4.0/gpgpu-sim_distribution/bicg
+self exe links to: /home/burak/gpgpu-sim-4.0/gpgpu-sim_distribution/bicg
+11.0
+GPGPU-Sim PTX: __cudaRegisterFatBinary, fat_cubin_handle = 1, filename=default
+self exe links to: /home/burak/gpgpu-sim-4.0/gpgpu-sim_distribution/bicg
+Running md5sum using "md5sum /home/burak/gpgpu-sim-4.0/gpgpu-sim_distribution/bicg "
+self exe links to: /home/burak/gpgpu-sim-4.0/gpgpu-sim_distribution/bicg
+Extracting specific PTX file named bicg.1.sm_52.ptx 
+GPGPU-Sim PTX: __cudaRegisterFunction _Z12bicg_kernel2PfS_S_ : hostFun 0x0x5594745c7c8c, fat_cubin_handle = 1
+GPGPU-Sim PTX: Parsing bicg.1.sm_52.ptx
+GPGPU-Sim PTX: instruction assembly for function '_Z12bicg_kernel1PfS_S_'...   done.
+GPGPU-Sim PTX: instruction assembly for function '_Z12bicg_kernel2PfS_S_'...   done.
+GPGPU-Sim PTX: finished parsing EMBEDDED .ptx file bicg.1.sm_52.ptx
+GPGPU-Sim PTX: loading globals with explicit initializers... 
+GPGPU-Sim PTX: finished loading globals (0 bytes total).
+GPGPU-Sim PTX: loading constants with explicit initializers...  done.
+GPGPU-Sim PTX: Loading PTXInfo from bicg.1.sm_52.ptx
+GPGPU-Sim PTX: Kernel '_Z12bicg_kernel2PfS_S_' : regs=20, lmem=0, smem=0, cmem=344
+GPGPU-Sim PTX: Kernel '_Z12bicg_kernel1PfS_S_' : regs=16, lmem=0, smem=0, cmem=344
+GPGPU-Sim PTX: __cudaRegisterFunction _Z12bicg_kernel1PfS_S_ : hostFun 0x0x5594745c7b07, fat_cubin_handle = 1
+setting device 0 with name GPGPU-Sim_vGPGPU-Sim Simulator Version 4.0.0 
+GPGPU-Sim PTX: Setting up arguments for 8 bytes starting at 0x7ffcac217c98..
+GPGPU-Sim PTX: Setting up arguments for 8 bytes starting at 0x7ffcac217c90..
+GPGPU-Sim PTX: Setting up arguments for 8 bytes starting at 0x7ffcac217c88..
+
+GPGPU-Sim PTX: cudaLaunch for 0x0x5594745c7b07 (mode=performance simulation) on stream 0
+GPGPU-Sim PTX: finding reconvergence points for '_Z12bicg_kernel1PfS_S_'...
+GPGPU-Sim PTX: Finding dominators for '_Z12bicg_kernel1PfS_S_'...
+GPGPU-Sim PTX: Finding immediate dominators for '_Z12bicg_kernel1PfS_S_'...
+GPGPU-Sim PTX: Finding postdominators for '_Z12bicg_kernel1PfS_S_'...
+GPGPU-Sim PTX: Finding immediate postdominators for '_Z12bicg_kernel1PfS_S_'...
+GPGPU-Sim PTX: pre-decoding instructions for '_Z12bicg_kernel1PfS_S_'...
+GPGPU-Sim PTX: reconvergence points for _Z12bicg_kernel1PfS_S_...
+GPGPU-Sim PTX:  1 (potential) branch divergence @  PC=0x040 (bicg.1.sm_52.ptx:35) @%p1 bra BB0_3;
+GPGPU-Sim PTX:    immediate post dominator      @  PC=0x1c8 (bicg.1.sm_52.ptx:89) ret;
+GPGPU-Sim PTX:  2 (potential) branch divergence @  PC=0x1c0 (bicg.1.sm_52.ptx:86) @%p2 bra BB0_2;
+GPGPU-Sim PTX:    immediate post dominator      @  PC=0x1c8 (bicg.1.sm_52.ptx:89) ret;
+GPGPU-Sim PTX: ... end of reconvergence points for _Z12bicg_kernel1PfS_S_
+GPGPU-Sim PTX: ... done pre-decoding instructions for '_Z12bicg_kernel1PfS_S_'.
+GPGPU-Sim PTX: pushing kernel '_Z12bicg_kernel1PfS_S_' to stream 0, gridDim= (16,1,1) blockDim = (256,1,1) 
+GPGPU-Sim uArch: Shader 0 bind to kernel 1 '_Z12bicg_kernel1PfS_S_'
+GPGPU-Sim uArch: CTA/core = 8, limited by: threads
+GPGPU-Sim uArch: Shader 1 bind to kernel 1 '_Z12bicg_kernel1PfS_S_'
+GPGPU-Sim uArch: Shader 2 bind to kernel 1 '_Z12bicg_kernel1PfS_S_'
+GPGPU-Sim uArch: Shader 3 bind to kernel 1 '_Z12bicg_kernel1PfS_S_'
+GPGPU-Sim uArch: Shader 4 bind to kernel 1 '_Z12bicg_kernel1PfS_S_'
+GPGPU-Sim uArch: Shader 5 bind to kernel 1 '_Z12bicg_kernel1PfS_S_'
+GPGPU-Sim uArch: Shader 6 bind to kernel 1 '_Z12bicg_kernel1PfS_S_'
+GPGPU-Sim uArch: Shader 7 bind to kernel 1 '_Z12bicg_kernel1PfS_S_'
+GPGPU-Sim uArch: Shader 8 bind to kernel 1 '_Z12bicg_kernel1PfS_S_'
+GPGPU-Sim uArch: Shader 9 bind to kernel 1 '_Z12bicg_kernel1PfS_S_'
+GPGPU-Sim uArch: Shader 10 bind to kernel 1 '_Z12bicg_kernel1PfS_S_'
+GPGPU-Sim uArch: Shader 11 bind to kernel 1 '_Z12bicg_kernel1PfS_S_'
+GPGPU-Sim uArch: Shader 12 bind to kernel 1 '_Z12bicg_kernel1PfS_S_'
+GPGPU-Sim uArch: Shader 13 bind to kernel 1 '_Z12bicg_kernel1PfS_S_'
+Destroy streams for kernel 1: size 0
+kernel_name = _Z12bicg_kernel1PfS_S_ 
+kernel_launch_uid = 1 
+gpu_sim_cycle = 4771320
+gpu_sim_insn = 81858560
+gpu_ipc =      17.1564
+gpu_tot_sim_cycle = 4771320
+gpu_tot_sim_insn = 81858560
+gpu_tot_ipc =      17.1564
+gpu_tot_issued_cta = 16
+gpu_occupancy = 14.2960% 
+gpu_tot_occupancy = 14.2960% 
+max_total_param_size = 0
+gpu_stall_dramfull = 0
+gpu_stall_icnt2sh    = 0
+partiton_level_parallism =       0.9891
+partiton_level_parallism_total  =       0.9891
+partiton_level_parallism_util =       1.0000
+partiton_level_parallism_util_total  =       1.0000
+L2_BW  =      46.8417 GB/Sec
+L2_BW_total  =      46.8417 GB/Sec
+gpu_total_sim_rate=53960
+gpgpu_n_tot_thrd_icount = 81866752
+gpgpu_n_tot_w_icount = 2558336
+gpgpu_n_stall_shd_mem = 56149671
+gpgpu_n_mem_read_local = 0
+gpgpu_n_mem_write_local = 0
+gpgpu_n_mem_read_global = 2621440
+gpgpu_n_mem_write_global = 2097664
+gpgpu_n_mem_texture = 0
+gpgpu_n_mem_const = 0
+gpgpu_n_load_insn  = 33554432
+gpgpu_n_store_insn = 16781312
+gpgpu_n_shmem_insn = 0
+gpgpu_n_sstarr_insn = 0
+gpgpu_n_tex_insn = 0
+gpgpu_n_const_mem_insn = 0
+gpgpu_n_param_mem_insn = 12288
+gpgpu_n_shmem_bkconflict = 0
+gpgpu_n_cache_bkconflict = 0
+gpgpu_n_intrawarp_mshr_merge = 0
+gpgpu_n_cmem_portconflict = 0
+gpgpu_stall_shd_mem[c_mem][resource_stall] = 0
+gpgpu_stall_shd_mem[s_mem][bk_conf] = 0
+gpgpu_stall_shd_mem[gl_mem][resource_stall] = 0
+gpgpu_stall_shd_mem[gl_mem][coal_stall] = 3146112
+gpgpu_stall_shd_mem[gl_mem][data_port_stall] = 0
+gpu_reg_bank_conflict_stalls = 0
+Warp Occupancy Distribution:
+Stall:27624104	
+W0_Idle:1702927	
+W0_Scoreboard:205837301	
+W1:0	W2:0	W3:0	W4:0	W5:0	W6:0	W7:0	W8:0	W9:0	W10:0	W11:0	W12:0	W13:0	W14:0	W15:0	W16:0	W17:0	W18:0	W19:0	W20:0	W21:0	W22:0	W23:0	W24:0	W25:0	W26:0	W27:0	W28:0	W29:0	W30:0	
+W31:0	
+W32:2558336
+single_issue_nums: WS0:639456	WS1:639456	WS2:639456	WS3:639456	
+dual_issue_nums: WS0:64	WS1:64	WS2:64	WS3:64	
+traffic_breakdown_coretomem[GLOBAL_ACC_R] = 20971520 {8:2621440,}
+traffic_breakdown_coretomem[GLOBAL_ACC_W] = 83906560 {40:2097664,}
+traffic_breakdown_memtocore[GLOBAL_ACC_R] = 104857600 {40:2621440,}
+traffic_breakdown_memtocore[GLOBAL_ACC_W] = 16781312 {8:2097664,}
+Memory Partition 0: 
+Cache L2_bank_000:
+MSHR contents
+
+Cache L2_bank_001:
+MSHR contents
+
+In Dram Latency Queue (total = 0): 
+DRAM[0]: 16 bks, busW=4 BL=8 CL=16, tRRD=8 tCCD=2, tRCD=16 tRAS=37 tRP=16 tRC=52
+n_cmd=12257132 n_nop=11938960 n_act=28032 n_pre=28016 n_ref_event=0 n_req=262168 n_rd=262168 n_rd_L2_A=0 n_write=0 n_wr_bk=0 bw_util=0.04278
+n_activity=3915468 dram_eff=0.1339
+bk0: 16396a 12199353i bk1: 16396a 12186014i bk2: 16384a 12197900i bk3: 16384a 12185298i bk4: 16384a 12196445i bk5: 16384a 12184966i bk6: 16384a 12196688i bk7: 16384a 12185371i bk8: 16384a 12197159i bk9: 16384a 12184318i bk10: 16384a 12197604i bk11: 16384a 12184032i bk12: 16384a 12197685i bk13: 16384a 12185324i bk14: 16384a 12198782i bk15: 16384a 12184057i 
+
+------------------------------------------------------------------------
+
+Row_Buffer_Locality = 0.893076
+Row_Buffer_Locality_read = 0.893076
+Row_Buffer_Locality_write = -nan
+Bank_Level_Parallism = 1.037985
+Bank_Level_Parallism_Col = 1.018771
+Bank_Level_Parallism_Ready = 1.000965
+write_to_read_ratio_blp_rw_average = 0.000000
+GrpLevelPara = 1.015331 
+
+BW Util details:
+bwutil = 0.042778 
+total_CMD = 12257132 
+util_bw = 524336 
+Wasted_Col = 484106 
+Wasted_Row = 449027 
+Idle = 10799663 
+
+BW Util Bottlenecks: 
+RCDc_limit = 432566 
+RCDWRc_limit = 0 
+WTRc_limit = 0 
+RTWc_limit = 0 
+CCDLc_limit = 59754 
+rwq = 0 
+CCDLc_limit_alone = 59754 
+WTRc_limit_alone = 0 
+RTWc_limit_alone = 0 
+
+Commands details: 
+total_CMD = 12257132 
+n_nop = 11938960 
+Read = 262168 
+Write = 0 
+L2_Alloc = 0 
+L2_WB = 0 
+n_act = 28032 
+n_pre = 28016 
+n_ref = 0 
+n_req = 262168 
+total_req = 262168 
+
+Dual Bus Interface Util: 
+issued_total_row = 56048 
+issued_total_col = 262168 
+Row_Bus_Util =  0.004573 
+CoL_Bus_Util = 0.021389 
+Either_Row_CoL_Bus_Util = 0.025958 
+Issued_on_Two_Bus_Simul_Util = 0.000004 
+issued_two_Eff = 0.000138 
+queue_avg = 0.050925 
+
+
+dram_util_bins: 0 0 0 0 0 0 0 0 0 0
+dram_eff_bins: 0 0 0 0 0 0 0 0 0 0
+mrqq: max=7 avg=0.050925
+Memory Partition 1: 
+Cache L2_bank_002:
+MSHR contents
+
+Cache L2_bank_003:
+MSHR contents
+
+In Dram Latency Queue (total = 0): 
+DRAM[1]: 16 bks, busW=4 BL=8 CL=16, tRRD=8 tCCD=2, tRCD=16 tRAS=37 tRP=16 tRC=52
+n_cmd=12257132 n_nop=11928405 n_act=33310 n_pre=33294 n_ref_event=0 n_req=262168 n_rd=262168 n_rd_L2_A=0 n_write=0 n_wr_bk=0 bw_util=0.04278
+n_activity=4072605 dram_eff=0.1287
+bk0: 16396a 12193751i bk1: 16396a 12168493i bk2: 16384a 12192997i bk3: 16384a 12163501i bk4: 16384a 12190689i bk5: 16384a 12165692i bk6: 16384a 12192985i bk7: 16384a 12166018i bk8: 16384a 12193648i bk9: 16384a 12168218i bk10: 16384a 12192366i bk11: 16384a 12167537i bk12: 16384a 12190885i bk13: 16384a 12168709i bk14: 16384a 12192436i bk15: 16384a 12170262i 
+
+------------------------------------------------------------------------
+
+Row_Buffer_Locality = 0.872944
+Row_Buffer_Locality_read = 0.872944
+Row_Buffer_Locality_write = -nan
+Bank_Level_Parallism = 1.043419
+Bank_Level_Parallism_Col = 1.019782
+Bank_Level_Parallism_Ready = 1.000633
+write_to_read_ratio_blp_rw_average = 0.000000
+GrpLevelPara = 1.016341 
+
+BW Util details:
+bwutil = 0.042778 
+total_CMD = 12257132 
+util_bw = 524336 
+Wasted_Col = 564716 
+Wasted_Row = 528053 
+Idle = 10640027 
+
+BW Util Bottlenecks: 
+RCDc_limit = 513799 
+RCDWRc_limit = 0 
+WTRc_limit = 0 
+RTWc_limit = 0 
+CCDLc_limit = 61404 
+rwq = 0 
+CCDLc_limit_alone = 61404 
+WTRc_limit_alone = 0 
+RTWc_limit_alone = 0 
+
+Commands details: 
+total_CMD = 12257132 
+n_nop = 11928405 
+Read = 262168 
+Write = 0 
+L2_Alloc = 0 
+L2_WB = 0 
+n_act = 33310 
+n_pre = 33294 
+n_ref = 0 
+n_req = 262168 
+total_req = 262168 
+
+Dual Bus Interface Util: 
+issued_total_row = 66604 
+issued_total_col = 262168 
+Row_Bus_Util =  0.005434 
+CoL_Bus_Util = 0.021389 
+Either_Row_CoL_Bus_Util = 0.026819 
+Issued_on_Two_Bus_Simul_Util = 0.000004 
+issued_two_Eff = 0.000137 
+queue_avg = 0.052398 
+
+
+dram_util_bins: 0 0 0 0 0 0 0 0 0 0
+dram_eff_bins: 0 0 0 0 0 0 0 0 0 0
+mrqq: max=8 avg=0.0523981
+Memory Partition 2: 
+Cache L2_bank_004:
+MSHR contents
+
+Cache L2_bank_005:
+MSHR contents
+
+In Dram Latency Queue (total = 0): 
+DRAM[2]: 16 bks, busW=4 BL=8 CL=16, tRRD=8 tCCD=2, tRCD=16 tRAS=37 tRP=16 tRC=52
+n_cmd=12257132 n_nop=11918504 n_act=38262 n_pre=38246 n_ref_event=0 n_req=262168 n_rd=262168 n_rd_L2_A=0 n_write=0 n_wr_bk=0 bw_util=0.04278
+n_activity=4225963 dram_eff=0.1241
+bk0: 16396a 12159610i bk1: 16396a 12177596i bk2: 16384a 12160916i bk3: 16384a 12178291i bk4: 16384a 12162220i bk5: 16384a 12175305i bk6: 16384a 12161300i bk7: 16384a 12174964i bk8: 16384a 12160117i bk9: 16384a 12177216i bk10: 16384a 12161479i bk11: 16384a 12176983i bk12: 16384a 12160905i bk13: 16384a 12176390i bk14: 16384a 12159175i bk15: 16384a 12177727i 
+
+------------------------------------------------------------------------
+
+Row_Buffer_Locality = 0.854055
+Row_Buffer_Locality_read = 0.854055
+Row_Buffer_Locality_write = -nan
+Bank_Level_Parallism = 1.048232
+Bank_Level_Parallism_Col = 1.022168
+Bank_Level_Parallism_Ready = 1.000762
+write_to_read_ratio_blp_rw_average = 0.000000
+GrpLevelPara = 1.018321 
+
+BW Util details:
+bwutil = 0.042778 
+total_CMD = 12257132 
+util_bw = 524336 
+Wasted_Col = 643967 
+Wasted_Row = 601109 
+Idle = 10487720 
+
+BW Util Bottlenecks: 
+RCDc_limit = 590095 
+RCDWRc_limit = 0 
+WTRc_limit = 0 
+RTWc_limit = 0 
+CCDLc_limit = 67165 
+rwq = 0 
+CCDLc_limit_alone = 67165 
+WTRc_limit_alone = 0 
+RTWc_limit_alone = 0 
+
+Commands details: 
+total_CMD = 12257132 
+n_nop = 11918504 
+Read = 262168 
+Write = 0 
+L2_Alloc = 0 
+L2_WB = 0 
+n_act = 38262 
+n_pre = 38246 
+n_ref = 0 
+n_req = 262168 
+total_req = 262168 
+
+Dual Bus Interface Util: 
+issued_total_row = 76508 
+issued_total_col = 262168 
+Row_Bus_Util =  0.006242 
+CoL_Bus_Util = 0.021389 
+Either_Row_CoL_Bus_Util = 0.027627 
+Issued_on_Two_Bus_Simul_Util = 0.000004 
+issued_two_Eff = 0.000142 
+queue_avg = 0.069635 
+
+
+dram_util_bins: 0 0 0 0 0 0 0 0 0 0
+dram_eff_bins: 0 0 0 0 0 0 0 0 0 0
+mrqq: max=7 avg=0.0696346
+Memory Partition 3: 
+Cache L2_bank_006:
+MSHR contents
+
+Cache L2_bank_007:
+MSHR contents
+
+In Dram Latency Queue (total = 0): 
+DRAM[3]: 16 bks, busW=4 BL=8 CL=16, tRRD=8 tCCD=2, tRCD=16 tRAS=37 tRP=16 tRC=52
+n_cmd=12257132 n_nop=11918464 n_act=38285 n_pre=38269 n_ref_event=0 n_req=262168 n_rd=262168 n_rd_L2_A=0 n_write=0 n_wr_bk=0 bw_util=0.04278
+n_activity=4230874 dram_eff=0.1239
+bk0: 16396a 12151900i bk1: 16396a 12185190i bk2: 16384a 12154519i bk3: 16384a 12184257i bk4: 16384a 12155344i bk5: 16384a 12186524i bk6: 16384a 12153041i bk7: 16384a 12185506i bk8: 16384a 12153185i bk9: 16384a 12183312i bk10: 16384a 12153201i bk11: 16384a 12184478i bk12: 16384a 12152098i bk13: 16384a 12184465i bk14: 16384a 12149801i bk15: 16384a 12184886i 
+
+------------------------------------------------------------------------
+
+Row_Buffer_Locality = 0.853968
+Row_Buffer_Locality_read = 0.853968
+Row_Buffer_Locality_write = -nan
+Bank_Level_Parallism = 1.046156
+Bank_Level_Parallism_Col = 1.019693
+Bank_Level_Parallism_Ready = 1.000522
+write_to_read_ratio_blp_rw_average = 0.000000
+GrpLevelPara = 1.016186 
+
+BW Util details:
+bwutil = 0.042778 
+total_CMD = 12257132 
+util_bw = 524336 
+Wasted_Col = 646644 
+Wasted_Row = 598239 
+Idle = 10487913 
+
+BW Util Bottlenecks: 
+RCDc_limit = 591003 
+RCDWRc_limit = 0 
+WTRc_limit = 0 
+RTWc_limit = 0 
+CCDLc_limit = 67551 
+rwq = 0 
+CCDLc_limit_alone = 67551 
+WTRc_limit_alone = 0 
+RTWc_limit_alone = 0 
+
+Commands details: 
+total_CMD = 12257132 
+n_nop = 11918464 
+Read = 262168 
+Write = 0 
+L2_Alloc = 0 
+L2_WB = 0 
+n_act = 38285 
+n_pre = 38269 
+n_ref = 0 
+n_req = 262168 
+total_req = 262168 
+
+Dual Bus Interface Util: 
+issued_total_row = 76554 
+issued_total_col = 262168 
+Row_Bus_Util =  0.006246 
+CoL_Bus_Util = 0.021389 
+Either_Row_CoL_Bus_Util = 0.027630 
+Issued_on_Two_Bus_Simul_Util = 0.000004 
+issued_two_Eff = 0.000159 
+queue_avg = 0.079307 
+
+
+dram_util_bins: 0 0 0 0 0 0 0 0 0 0
+dram_eff_bins: 0 0 0 0 0 0 0 0 0 0
+mrqq: max=7 avg=0.0793067
+Memory Partition 4: 
+Cache L2_bank_008:
+MSHR contents
+
+Cache L2_bank_009:
+MSHR contents
+
+In Dram Latency Queue (total = 0): 
+DRAM[4]: 16 bks, busW=4 BL=8 CL=16, tRRD=8 tCCD=2, tRCD=16 tRAS=37 tRP=16 tRC=52
+n_cmd=12257132 n_nop=11923006 n_act=36009 n_pre=35993 n_ref_event=0 n_req=262168 n_rd=262168 n_rd_L2_A=0 n_write=0 n_wr_bk=0 bw_util=0.04278
+n_activity=4140488 dram_eff=0.1266
+bk0: 16396a 12175539i bk1: 16396a 12173212i bk2: 16384a 12174503i bk3: 16384a 12174329i bk4: 16384a 12174089i bk5: 16384a 12173240i bk6: 16384a 12174529i bk7: 16384a 12172158i bk8: 16384a 12172426i bk9: 16384a 12174676i bk10: 16384a 12173698i bk11: 16384a 12176770i bk12: 16384a 12174966i bk13: 16384a 12175648i bk14: 16384a 12172337i bk15: 16384a 12174960i 
+
+------------------------------------------------------------------------
+
+Row_Buffer_Locality = 0.862649
+Row_Buffer_Locality_read = 0.862649
+Row_Buffer_Locality_write = -nan
+Bank_Level_Parallism = 1.049911
+Bank_Level_Parallism_Col = 1.022867
+Bank_Level_Parallism_Ready = 1.001174
+write_to_read_ratio_blp_rw_average = 0.000000
+GrpLevelPara = 1.018123 
+
+BW Util details:
+bwutil = 0.042778 
+total_CMD = 12257132 
+util_bw = 524336 
+Wasted_Col = 604006 
+Wasted_Row = 562806 
+Idle = 10565984 
+
+BW Util Bottlenecks: 
+RCDc_limit = 554704 
+RCDWRc_limit = 0 
+WTRc_limit = 0 
+RTWc_limit = 0 
+CCDLc_limit = 62818 
+rwq = 0 
+CCDLc_limit_alone = 62818 
+WTRc_limit_alone = 0 
+RTWc_limit_alone = 0 
+
+Commands details: 
+total_CMD = 12257132 
+n_nop = 11923006 
+Read = 262168 
+Write = 0 
+L2_Alloc = 0 
+L2_WB = 0 
+n_act = 36009 
+n_pre = 35993 
+n_ref = 0 
+n_req = 262168 
+total_req = 262168 
+
+Dual Bus Interface Util: 
+issued_total_row = 72002 
+issued_total_col = 262168 
+Row_Bus_Util =  0.005874 
+CoL_Bus_Util = 0.021389 
+Either_Row_CoL_Bus_Util = 0.027260 
+Issued_on_Two_Bus_Simul_Util = 0.000004 
+issued_two_Eff = 0.000132 
+queue_avg = 0.052392 
+
+
+dram_util_bins: 0 0 0 0 0 0 0 0 0 0
+dram_eff_bins: 0 0 0 0 0 0 0 0 0 0
+mrqq: max=7 avg=0.0523917
+Memory Partition 5: 
+Cache L2_bank_010:
+MSHR contents
+
+Cache L2_bank_011:
+MSHR contents
+
+In Dram Latency Queue (total = 0): 
+DRAM[5]: 16 bks, busW=4 BL=8 CL=16, tRRD=8 tCCD=2, tRCD=16 tRAS=37 tRP=16 tRC=52
+n_cmd=12257132 n_nop=11917089 n_act=38975 n_pre=38959 n_ref_event=0 n_req=262172 n_rd=262172 n_rd_L2_A=0 n_write=0 n_wr_bk=0 bw_util=0.04278
+n_activity=4222844 dram_eff=0.1242
+bk0: 16396a 12163203i bk1: 16400a 12171232i bk2: 16384a 12163355i bk3: 16384a 12171883i bk4: 16384a 12163913i bk5: 16384a 12170913i bk6: 16384a 12163689i bk7: 16384a 12173929i bk8: 16384a 12164876i bk9: 16384a 12171923i bk10: 16384a 12163820i bk11: 16384a 12173588i bk12: 16384a 12164407i bk13: 16384a 12171601i bk14: 16384a 12163142i bk15: 16384a 12170830i 
+
+------------------------------------------------------------------------
+
+Row_Buffer_Locality = 0.851338
+Row_Buffer_Locality_read = 0.851338
+Row_Buffer_Locality_write = -nan
+Bank_Level_Parallism = 1.055013
+Bank_Level_Parallism_Col = 1.024690
+Bank_Level_Parallism_Ready = 1.000652
+write_to_read_ratio_blp_rw_average = 0.000000
+GrpLevelPara = 1.020193 
+
+BW Util details:
+bwutil = 0.042779 
+total_CMD = 12257132 
+util_bw = 524344 
+Wasted_Col = 645430 
+Wasted_Row = 604717 
+Idle = 10482641 
+
+BW Util Bottlenecks: 
+RCDc_limit = 600016 
+RCDWRc_limit = 0 
+WTRc_limit = 0 
+RTWc_limit = 0 
+CCDLc_limit = 60622 
+rwq = 0 
+CCDLc_limit_alone = 60622 
+WTRc_limit_alone = 0 
+RTWc_limit_alone = 0 
+
+Commands details: 
+total_CMD = 12257132 
+n_nop = 11917089 
+Read = 262172 
+Write = 0 
+L2_Alloc = 0 
+L2_WB = 0 
+n_act = 38975 
+n_pre = 38959 
+n_ref = 0 
+n_req = 262172 
+total_req = 262172 
+
+Dual Bus Interface Util: 
+issued_total_row = 77934 
+issued_total_col = 262172 
+Row_Bus_Util =  0.006358 
+CoL_Bus_Util = 0.021389 
+Either_Row_CoL_Bus_Util = 0.027742 
+Issued_on_Two_Bus_Simul_Util = 0.000005 
+issued_two_Eff = 0.000185 
+queue_avg = 0.053061 
+
+
+dram_util_bins: 0 0 0 0 0 0 0 0 0 0
+dram_eff_bins: 0 0 0 0 0 0 0 0 0 0
+mrqq: max=7 avg=0.0530611
+Memory Partition 6: 
+Cache L2_bank_012:
+MSHR contents
+
+Cache L2_bank_013:
+MSHR contents
+
+In Dram Latency Queue (total = 0): 
+DRAM[6]: 16 bks, busW=4 BL=8 CL=16, tRRD=8 tCCD=2, tRCD=16 tRAS=37 tRP=16 tRC=52
+n_cmd=12257132 n_nop=11925641 n_act=34691 n_pre=34675 n_ref_event=0 n_req=262168 n_rd=262168 n_rd_L2_A=0 n_write=0 n_wr_bk=0 bw_util=0.04278
+n_activity=4118179 dram_eff=0.1273
+bk0: 16396a 12149641i bk1: 16396a 12202727i bk2: 16384a 12149786i bk3: 16384a 12202736i bk4: 16384a 12150309i bk5: 16384a 12204874i bk6: 16384a 12152501i bk7: 16384a 12203070i bk8: 16384a 12153088i bk9: 16384a 12204753i bk10: 16384a 12150084i bk11: 16384a 12204601i bk12: 16384a 12149022i bk13: 16384a 12201037i bk14: 16384a 12151079i bk15: 16384a 12202550i 
+
+------------------------------------------------------------------------
+
+Row_Buffer_Locality = 0.867676
+Row_Buffer_Locality_read = 0.867676
+Row_Buffer_Locality_write = -nan
+Bank_Level_Parallism = 1.042852
+Bank_Level_Parallism_Col = 1.020248
+Bank_Level_Parallism_Ready = 1.000629
+write_to_read_ratio_blp_rw_average = 0.000000
+GrpLevelPara = 1.016888 
+
+BW Util details:
+bwutil = 0.042778 
+total_CMD = 12257132 
+util_bw = 524336 
+Wasted_Col = 589535 
+Wasted_Row = 544338 
+Idle = 10598923 
+
+BW Util Bottlenecks: 
+RCDc_limit = 535339 
+RCDWRc_limit = 0 
+WTRc_limit = 0 
+RTWc_limit = 0 
+CCDLc_limit = 64898 
+rwq = 0 
+CCDLc_limit_alone = 64898 
+WTRc_limit_alone = 0 
+RTWc_limit_alone = 0 
+
+Commands details: 
+total_CMD = 12257132 
+n_nop = 11925641 
+Read = 262168 
+Write = 0 
+L2_Alloc = 0 
+L2_WB = 0 
+n_act = 34691 
+n_pre = 34675 
+n_ref = 0 
+n_req = 262168 
+total_req = 262168 
+
+Dual Bus Interface Util: 
+issued_total_row = 69366 
+issued_total_col = 262168 
+Row_Bus_Util =  0.005659 
+CoL_Bus_Util = 0.021389 
+Either_Row_CoL_Bus_Util = 0.027045 
+Issued_on_Two_Bus_Simul_Util = 0.000004 
+issued_two_Eff = 0.000130 
+queue_avg = 0.065025 
+
+
+dram_util_bins: 0 0 0 0 0 0 0 0 0 0
+dram_eff_bins: 0 0 0 0 0 0 0 0 0 0
+mrqq: max=9 avg=0.0650252
+Memory Partition 7: 
+Cache L2_bank_014:
+MSHR contents
+
+Cache L2_bank_015:
+MSHR contents
+
+In Dram Latency Queue (total = 0): 
+DRAM[7]: 16 bks, busW=4 BL=8 CL=16, tRRD=8 tCCD=2, tRCD=16 tRAS=37 tRP=16 tRC=52
+n_cmd=12257132 n_nop=11922101 n_act=36470 n_pre=36454 n_ref_event=0 n_req=262172 n_rd=262172 n_rd_L2_A=0 n_write=0 n_wr_bk=0 bw_util=0.04278
+n_activity=4144729 dram_eff=0.1265
+bk0: 16396a 12188929i bk1: 16400a 12153043i bk2: 16384a 12191735i bk3: 16384a 12156496i bk4: 16384a 12192754i bk5: 16384a 12157081i bk6: 16384a 12191627i bk7: 16384a 12155698i bk8: 16384a 12190825i bk9: 16384a 12156188i bk10: 16384a 12190522i bk11: 16384a 12157386i bk12: 16384a 12190911i bk13: 16384a 12154217i bk14: 16384a 12189456i bk15: 16384a 12155135i 
+
+------------------------------------------------------------------------
+
+Row_Buffer_Locality = 0.860893
+Row_Buffer_Locality_read = 0.860893
+Row_Buffer_Locality_write = -nan
+Bank_Level_Parallism = 1.052007
+Bank_Level_Parallism_Col = 1.023705
+Bank_Level_Parallism_Ready = 1.000865
+write_to_read_ratio_blp_rw_average = 0.000000
+GrpLevelPara = 1.019612 
+
+BW Util details:
+bwutil = 0.042779 
+total_CMD = 12257132 
+util_bw = 524344 
+Wasted_Col = 609399 
+Wasted_Row = 567990 
+Idle = 10555399 
+
+BW Util Bottlenecks: 
+RCDc_limit = 561495 
+RCDWRc_limit = 0 
+WTRc_limit = 0 
+RTWc_limit = 0 
+CCDLc_limit = 61432 
+rwq = 0 
+CCDLc_limit_alone = 61432 
+WTRc_limit_alone = 0 
+RTWc_limit_alone = 0 
+
+Commands details: 
+total_CMD = 12257132 
+n_nop = 11922101 
+Read = 262172 
+Write = 0 
+L2_Alloc = 0 
+L2_WB = 0 
+n_act = 36470 
+n_pre = 36454 
+n_ref = 0 
+n_req = 262172 
+total_req = 262172 
+
+Dual Bus Interface Util: 
+issued_total_row = 72924 
+issued_total_col = 262172 
+Row_Bus_Util =  0.005950 
+CoL_Bus_Util = 0.021389 
+Either_Row_CoL_Bus_Util = 0.027334 
+Issued_on_Two_Bus_Simul_Util = 0.000005 
+issued_two_Eff = 0.000194 
+queue_avg = 0.052756 
+
+
+dram_util_bins: 0 0 0 0 0 0 0 0 0 0
+dram_eff_bins: 0 0 0 0 0 0 0 0 0 0
+mrqq: max=9 avg=0.0527564
+
+icnt_total_pkts_mem_to_simt=4719104
+icnt_total_pkts_simt_to_mem=4719104
+LD_mem_lat_dist  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ST_mem_lat_dist  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+
+gpgpu_simulation_time = 0 days, 0 hrs, 25 min, 17 sec (1517 sec)
+gpgpu_simulation_rate = 53960 (inst/sec)
+gpgpu_simulation_rate = 3145 (cycle/sec)
+gpgpu_silicon_slowdown = 470588x
+GPGPU-Sim: synchronize waiting for inactive GPU simulation
+GPGPU-Sim API: Stream Manager State
+GPGPU-Sim: detected inactive GPU simulation thread
+GPGPU-Sim PTX: Setting up arguments for 8 bytes starting at 0x7ffcac217c98..
+GPGPU-Sim PTX: Setting up arguments for 8 bytes starting at 0x7ffcac217c90..
+GPGPU-Sim PTX: Setting up arguments for 8 bytes starting at 0x7ffcac217c88..
+
+GPGPU-Sim PTX: cudaLaunch for 0x0x5594745c7c8c (mode=performance simulation) on stream 0
+GPGPU-Sim PTX: finding reconvergence points for '_Z12bicg_kernel2PfS_S_'...
+GPGPU-Sim PTX: Finding dominators for '_Z12bicg_kernel2PfS_S_'...
+GPGPU-Sim PTX: Finding immediate dominators for '_Z12bicg_kernel2PfS_S_'...
+GPGPU-Sim PTX: Finding postdominators for '_Z12bicg_kernel2PfS_S_'...
+GPGPU-Sim PTX: Finding immediate postdominators for '_Z12bicg_kernel2PfS_S_'...
+GPGPU-Sim PTX: pre-decoding instructions for '_Z12bicg_kernel2PfS_S_'...
+GPGPU-Sim PTX: reconvergence points for _Z12bicg_kernel2PfS_S_...
+GPGPU-Sim PTX:  1 (potential) branch divergence @  PC=0x210 (bicg.1.sm_52.ptx:113) @%p1 bra BB1_3;
+GPGPU-Sim PTX:    immediate post dominator      @  PC=0x3b0 (bicg.1.sm_52.ptx:170) ret;
+GPGPU-Sim PTX:  2 (potential) branch divergence @  PC=0x3a8 (bicg.1.sm_52.ptx:167) @%p2 bra BB1_2;
+GPGPU-Sim PTX:    immediate post dominator      @  PC=0x3b0 (bicg.1.sm_52.ptx:170) ret;
+GPGPU-Sim PTX: ... end of reconvergence points for _Z12bicg_kernel2PfS_S_
+GPGPU-Sim PTX: ... done pre-decoding instructions for '_Z12bicg_kernel2PfS_S_'.
+GPGPU-Sim PTX: pushing kernel '_Z12bicg_kernel2PfS_S_' to stream 0, gridDim= (16,1,1) blockDim = (256,1,1) 
+GPGPU-Sim uArch: Shader 2 bind to kernel 2 '_Z12bicg_kernel2PfS_S_'
+GPGPU-Sim uArch: CTA/core = 8, limited by: threads
+GPGPU-Sim uArch: Shader 3 bind to kernel 2 '_Z12bicg_kernel2PfS_S_'
+GPGPU-Sim uArch: Shader 4 bind to kernel 2 '_Z12bicg_kernel2PfS_S_'
+GPGPU-Sim uArch: Shader 5 bind to kernel 2 '_Z12bicg_kernel2PfS_S_'
+GPGPU-Sim uArch: Shader 6 bind to kernel 2 '_Z12bicg_kernel2PfS_S_'
+GPGPU-Sim uArch: Shader 7 bind to kernel 2 '_Z12bicg_kernel2PfS_S_'
+GPGPU-Sim uArch: Shader 8 bind to kernel 2 '_Z12bicg_kernel2PfS_S_'
+GPGPU-Sim uArch: Shader 9 bind to kernel 2 '_Z12bicg_kernel2PfS_S_'
+GPGPU-Sim uArch: Shader 10 bind to kernel 2 '_Z12bicg_kernel2PfS_S_'
+GPGPU-Sim uArch: Shader 11 bind to kernel 2 '_Z12bicg_kernel2PfS_S_'
+GPGPU-Sim uArch: Shader 12 bind to kernel 2 '_Z12bicg_kernel2PfS_S_'
+GPGPU-Sim uArch: Shader 13 bind to kernel 2 '_Z12bicg_kernel2PfS_S_'
+GPGPU-Sim uArch: Shader 0 bind to kernel 2 '_Z12bicg_kernel2PfS_S_'
+GPGPU-Sim uArch: Shader 1 bind to kernel 2 '_Z12bicg_kernel2PfS_S_'
+Destroy streams for kernel 2: size 0
+kernel_name = _Z12bicg_kernel2PfS_S_ 
+kernel_launch_uid = 2 
+gpu_sim_cycle = 19476966
+gpu_sim_insn = 79777792
+gpu_ipc =       4.0960
+gpu_tot_sim_cycle = 24248286
+gpu_tot_sim_insn = 161636352
+gpu_tot_ipc =       6.6659
+gpu_tot_issued_cta = 32
+gpu_occupancy = 14.4038% 
+gpu_tot_occupancy = 14.3826% 
+max_total_param_size = 0
+gpu_stall_dramfull = 0
+gpu_stall_icnt2sh    = 0
+partiton_level_parallism =       0.9960
+partiton_level_parallism_total  =       0.9946
+partiton_level_parallism_util =       1.0000
+partiton_level_parallism_util_total  =       1.0000
+L2_BW  =      47.1708 GB/Sec
+L2_BW_total  =      47.1061 GB/Sec
+gpu_total_sim_rate=21869
+gpgpu_n_tot_thrd_icount = 161652736
+gpgpu_n_tot_w_icount = 5051648
+gpgpu_n_stall_shd_mem = 295883535
+gpgpu_n_mem_read_local = 0
+gpgpu_n_mem_write_local = 0
+gpgpu_n_mem_read_global = 19922944
+gpgpu_n_mem_write_global = 4195328
+gpgpu_n_mem_texture = 0
+gpgpu_n_mem_const = 0
+gpgpu_n_load_insn  = 67108864
+gpgpu_n_store_insn = 33562624
+gpgpu_n_shmem_insn = 0
+gpgpu_n_sstarr_insn = 0
+gpgpu_n_tex_insn = 0
+gpgpu_n_const_mem_insn = 0
+gpgpu_n_param_mem_insn = 24576
+gpgpu_n_shmem_bkconflict = 0
+gpgpu_n_cache_bkconflict = 0
+gpgpu_n_intrawarp_mshr_merge = 0
+gpgpu_n_cmem_portconflict = 0
+gpgpu_stall_shd_mem[c_mem][resource_stall] = 0
+gpgpu_stall_shd_mem[s_mem][bk_conf] = 0
+gpgpu_stall_shd_mem[gl_mem][resource_stall] = 0
+gpgpu_stall_shd_mem[gl_mem][coal_stall] = 20972288
+gpgpu_stall_shd_mem[gl_mem][data_port_stall] = 0
+gpu_reg_bank_conflict_stalls = 0
+Warp Occupancy Distribution:
+Stall:472211937	
+W0_Idle:1885760	
+W0_Scoreboard:727508577	
+W1:0	W2:0	W3:0	W4:0	W5:0	W6:0	W7:0	W8:0	W9:0	W10:0	W11:0	W12:0	W13:0	W14:0	W15:0	W16:0	W17:0	W18:0	W19:0	W20:0	W21:0	W22:0	W23:0	W24:0	W25:0	W26:0	W27:0	W28:0	W29:0	W30:0	
+W31:0	
+W32:5051648
+single_issue_nums: WS0:1204752	WS1:1204400	WS2:1204510	WS3:1204774	
+dual_issue_nums: WS0:29080	WS1:29256	WS2:29201	WS3:29069	
+traffic_breakdown_coretomem[GLOBAL_ACC_R] = 159383552 {8:19922944,}
+traffic_breakdown_coretomem[GLOBAL_ACC_W] = 167813120 {40:4195328,}
+traffic_breakdown_memtocore[GLOBAL_ACC_R] = 796917760 {40:19922944,}
+traffic_breakdown_memtocore[GLOBAL_ACC_W] = 33562624 {8:4195328,}
+Memory Partition 0: 
+Cache L2_bank_000:
+MSHR contents
+
+Cache L2_bank_001:
+MSHR contents
+
+In Dram Latency Queue (total = 0): 
+DRAM[0]: 16 bks, busW=4 BL=8 CL=16, tRRD=8 tCCD=2, tRCD=16 tRAS=37 tRP=16 tRC=52
+n_cmd=62291876 n_nop=61524371 n_act=144795 n_pre=144779 n_ref_event=0 n_req=489148 n_rd=489132 n_rd_L2_A=0 n_write=0 n_wr_bk=64 bw_util=0.01571
+n_activity=7140495 dram_eff=0.137
+bk0: 30588a 61926938i bk1: 30608a 61917042i bk2: 30592a 61920962i bk3: 30624a 61909855i bk4: 30552a 61917806i bk5: 30588a 61907098i bk6: 30552a 61927862i bk7: 30576a 61919253i bk8: 30536a 61918359i bk9: 30576a 61905620i bk10: 30532a 61919096i bk11: 30576a 61908492i bk12: 30548a 61921503i bk13: 30572a 61913244i bk14: 30540a 61933307i bk15: 30572a 61921233i 
+
+------------------------------------------------------------------------
+
+Row_Buffer_Locality = 0.703985
+Row_Buffer_Locality_read = 0.704006
+Row_Buffer_Locality_write = 0.062500
+Bank_Level_Parallism = 1.794119
+Bank_Level_Parallism_Col = 1.272218
+Bank_Level_Parallism_Ready = 1.000515
+write_to_read_ratio_blp_rw_average = 0.000191
+GrpLevelPara = 1.163259 
+
+BW Util details:
+bwutil = 0.015707 
+total_CMD = 62291876 
+util_bw = 978392 
+Wasted_Col = 1721928 
+Wasted_Row = 1116567 
+Idle = 58474989 
+
+BW Util Bottlenecks: 
+RCDc_limit = 1928802 
+RCDWRc_limit = 117 
+WTRc_limit = 173 
+RTWc_limit = 218 
+CCDLc_limit = 326904 
+rwq = 0 
+CCDLc_limit_alone = 326860 
+WTRc_limit_alone = 165 
+RTWc_limit_alone = 182 
+
+Commands details: 
+total_CMD = 62291876 
+n_nop = 61524371 
+Read = 489132 
+Write = 0 
+L2_Alloc = 0 
+L2_WB = 64 
+n_act = 144795 
+n_pre = 144779 
+n_ref = 0 
+n_req = 489148 
+total_req = 489196 
+
+Dual Bus Interface Util: 
+issued_total_row = 289574 
+issued_total_col = 489196 
+Row_Bus_Util =  0.004649 
+CoL_Bus_Util = 0.007853 
+Either_Row_CoL_Bus_Util = 0.012321 
+Issued_on_Two_Bus_Simul_Util = 0.000181 
+issued_two_Eff = 0.014677 
+queue_avg = 0.062936 
+
+
+dram_util_bins: 0 0 0 0 0 0 0 0 0 0
+dram_eff_bins: 0 0 0 0 0 0 0 0 0 0
+mrqq: max=35 avg=0.062936
+Memory Partition 1: 
+Cache L2_bank_002:
+MSHR contents
+
+Cache L2_bank_003:
+MSHR contents
+
+In Dram Latency Queue (total = 0): 
+DRAM[1]: 16 bks, busW=4 BL=8 CL=16, tRRD=8 tCCD=2, tRCD=16 tRAS=37 tRP=16 tRC=52
+n_cmd=62291876 n_nop=61509798 n_act=150998 n_pre=150982 n_ref_event=0 n_req=491052 n_rd=491036 n_rd_L2_A=0 n_write=0 n_wr_bk=64 bw_util=0.01577
+n_activity=7342788 dram_eff=0.1338
+bk0: 30620a 61926551i bk1: 30784a 61894281i bk2: 30640a 61920626i bk3: 30800a 61882538i bk4: 30624a 61916062i bk5: 30764a 61883550i bk6: 30616a 61927216i bk7: 30760a 61893170i bk8: 30600a 61916317i bk9: 30756a 61884574i bk10: 30600a 61917289i bk11: 30760a 61884371i bk12: 30604a 61917775i bk13: 30760a 61890287i bk14: 30608a 61930827i bk15: 30740a 61902114i 
+
+------------------------------------------------------------------------
+
+Row_Buffer_Locality = 0.692501
+Row_Buffer_Locality_read = 0.692519
+Row_Buffer_Locality_write = 0.125000
+Bank_Level_Parallism = 1.753020
+Bank_Level_Parallism_Col = 1.261379
+Bank_Level_Parallism_Ready = 1.000380
+write_to_read_ratio_blp_rw_average = 0.000173
+GrpLevelPara = 1.157268 
+
+BW Util details:
+bwutil = 0.015768 
+total_CMD = 62291876 
+util_bw = 982200 
+Wasted_Col = 1821635 
+Wasted_Row = 1205327 
+Idle = 58282714 
+
+BW Util Bottlenecks: 
+RCDc_limit = 2027016 
+RCDWRc_limit = 99 
+WTRc_limit = 378 
+RTWc_limit = 260 
+CCDLc_limit = 327095 
+rwq = 0 
+CCDLc_limit_alone = 327011 
+WTRc_limit_alone = 343 
+RTWc_limit_alone = 211 
+
+Commands details: 
+total_CMD = 62291876 
+n_nop = 61509798 
+Read = 491036 
+Write = 0 
+L2_Alloc = 0 
+L2_WB = 64 
+n_act = 150998 
+n_pre = 150982 
+n_ref = 0 
+n_req = 491052 
+total_req = 491100 
+
+Dual Bus Interface Util: 
+issued_total_row = 301980 
+issued_total_col = 491100 
+Row_Bus_Util =  0.004848 
+CoL_Bus_Util = 0.007884 
+Either_Row_CoL_Bus_Util = 0.012555 
+Issued_on_Two_Bus_Simul_Util = 0.000177 
+issued_two_Eff = 0.014068 
+queue_avg = 0.061047 
+
+
+dram_util_bins: 0 0 0 0 0 0 0 0 0 0
+dram_eff_bins: 0 0 0 0 0 0 0 0 0 0
+mrqq: max=39 avg=0.0610467
+Memory Partition 2: 
+Cache L2_bank_004:
+MSHR contents
+
+Cache L2_bank_005:
+MSHR contents
+
+In Dram Latency Queue (total = 0): 
+DRAM[2]: 16 bks, busW=4 BL=8 CL=16, tRRD=8 tCCD=2, tRCD=16 tRAS=37 tRP=16 tRC=52
+n_cmd=62291876 n_nop=61503058 n_act=155063 n_pre=155047 n_ref_event=0 n_req=489584 n_rd=489568 n_rd_L2_A=0 n_write=0 n_wr_bk=64 bw_util=0.01572
+n_activity=7515663 dram_eff=0.1303
+bk0: 30644a 61890300i bk1: 30588a 61910736i bk2: 30660a 61887604i bk3: 30604a 61905634i bk4: 30620a 61887040i bk5: 30580a 61901043i bk6: 30616a 61895437i bk7: 30572a 61909030i bk8: 30620a 61882028i bk9: 30568a 61899430i bk10: 30608a 61886731i bk11: 30568a 61901461i bk12: 30596a 61888566i bk13: 30568a 61906084i bk14: 30588a 61897714i bk15: 30568a 61916962i 
+
+------------------------------------------------------------------------
+
+Row_Buffer_Locality = 0.683276
+Row_Buffer_Locality_read = 0.683296
+Row_Buffer_Locality_write = 0.062500
+Bank_Level_Parallism = 1.711413
+Bank_Level_Parallism_Col = 1.252577
+Bank_Level_Parallism_Ready = 1.000437
+write_to_read_ratio_blp_rw_average = 0.000178
+GrpLevelPara = 1.150241 
+
+BW Util details:
+bwutil = 0.015721 
+total_CMD = 62291876 
+util_bw = 979264 
+Wasted_Col = 1893167 
+Wasted_Row = 1289402 
+Idle = 58130043 
+
+BW Util Bottlenecks: 
+RCDc_limit = 2093030 
+RCDWRc_limit = 109 
+WTRc_limit = 333 
+RTWc_limit = 287 
+CCDLc_limit = 332330 
+rwq = 0 
+CCDLc_limit_alone = 332237 
+WTRc_limit_alone = 274 
+RTWc_limit_alone = 253 
+
+Commands details: 
+total_CMD = 62291876 
+n_nop = 61503058 
+Read = 489568 
+Write = 0 
+L2_Alloc = 0 
+L2_WB = 64 
+n_act = 155063 
+n_pre = 155047 
+n_ref = 0 
+n_req = 489584 
+total_req = 489632 
+
+Dual Bus Interface Util: 
+issued_total_row = 310110 
+issued_total_col = 489632 
+Row_Bus_Util =  0.004978 
+CoL_Bus_Util = 0.007860 
+Either_Row_CoL_Bus_Util = 0.012663 
+Issued_on_Two_Bus_Simul_Util = 0.000175 
+issued_two_Eff = 0.013849 
+queue_avg = 0.063079 
+
+
+dram_util_bins: 0 0 0 0 0 0 0 0 0 0
+dram_eff_bins: 0 0 0 0 0 0 0 0 0 0
+mrqq: max=38 avg=0.0630787
+Memory Partition 3: 
+Cache L2_bank_006:
+MSHR contents
+
+Cache L2_bank_007:
+MSHR contents
+
+In Dram Latency Queue (total = 0): 
+DRAM[3]: 16 bks, busW=4 BL=8 CL=16, tRRD=8 tCCD=2, tRCD=16 tRAS=37 tRP=16 tRC=52
+n_cmd=62291876 n_nop=61502858 n_act=155066 n_pre=155050 n_ref_event=0 n_req=488672 n_rd=488656 n_rd_L2_A=0 n_write=0 n_wr_bk=64 bw_util=0.01569
+n_activity=7541522 dram_eff=0.1296
+bk0: 30572a 61888370i bk1: 30548a 61919956i bk2: 30596a 61885849i bk3: 30560a 61912809i bk4: 30536a 61883784i bk5: 30540a 61912789i bk6: 30536a 61892063i bk7: 30544a 61921647i bk8: 30544a 61879153i bk9: 30520a 61906616i bk10: 30544a 61881470i bk11: 30520a 61911070i bk12: 30520a 61883765i bk13: 30532a 61914275i bk14: 30512a 61893823i bk15: 30532a 61926235i 
+
+------------------------------------------------------------------------
+
+Row_Buffer_Locality = 0.682679
+Row_Buffer_Locality_read = 0.682699
+Row_Buffer_Locality_write = 0.062500
+Bank_Level_Parallism = 1.687300
+Bank_Level_Parallism_Col = 1.238323
+Bank_Level_Parallism_Ready = 1.000299
+write_to_read_ratio_blp_rw_average = 0.000152
+GrpLevelPara = 1.145261 
+
+BW Util details:
+bwutil = 0.015691 
+total_CMD = 62291876 
+util_bw = 977440 
+Wasted_Col = 1919715 
+Wasted_Row = 1289278 
+Idle = 58105443 
+
+BW Util Bottlenecks: 
+RCDc_limit = 2109993 
+RCDWRc_limit = 119 
+WTRc_limit = 318 
+RTWc_limit = 218 
+CCDLc_limit = 318591 
+rwq = 0 
+CCDLc_limit_alone = 318515 
+WTRc_limit_alone = 274 
+RTWc_limit_alone = 186 
+
+Commands details: 
+total_CMD = 62291876 
+n_nop = 61502858 
+Read = 488656 
+Write = 0 
+L2_Alloc = 0 
+L2_WB = 64 
+n_act = 155066 
+n_pre = 155050 
+n_ref = 0 
+n_req = 488672 
+total_req = 488720 
+
+Dual Bus Interface Util: 
+issued_total_row = 310116 
+issued_total_col = 488720 
+Row_Bus_Util =  0.004978 
+CoL_Bus_Util = 0.007846 
+Either_Row_CoL_Bus_Util = 0.012666 
+Issued_on_Two_Bus_Simul_Util = 0.000158 
+issued_two_Eff = 0.012443 
+queue_avg = 0.058512 
+
+
+dram_util_bins: 0 0 0 0 0 0 0 0 0 0
+dram_eff_bins: 0 0 0 0 0 0 0 0 0 0
+mrqq: max=30 avg=0.0585119
+Memory Partition 4: 
+Cache L2_bank_008:
+MSHR contents
+
+Cache L2_bank_009:
+MSHR contents
+
+In Dram Latency Queue (total = 0): 
+DRAM[4]: 16 bks, busW=4 BL=8 CL=16, tRRD=8 tCCD=2, tRCD=16 tRAS=37 tRP=16 tRC=52
+n_cmd=62291876 n_nop=61506003 n_act=153000 n_pre=152984 n_ref_event=0 n_req=489996 n_rd=489980 n_rd_L2_A=0 n_write=0 n_wr_bk=64 bw_util=0.01573
+n_activity=7480519 dram_eff=0.131
+bk0: 30668a 61909695i bk1: 30628a 61909974i bk2: 30676a 61903456i bk3: 30648a 61905219i bk4: 30632a 61900839i bk5: 30620a 61900689i bk6: 30624a 61911878i bk7: 30620a 61910981i bk8: 30632a 61898144i bk9: 30608a 61900303i bk10: 30604a 61900149i bk11: 30600a 61905333i bk12: 30624a 61904505i bk13: 30600a 61908943i bk14: 30596a 61913644i bk15: 30600a 61918460i 
+
+------------------------------------------------------------------------
+
+Row_Buffer_Locality = 0.687753
+Row_Buffer_Locality_read = 0.687773
+Row_Buffer_Locality_write = 0.062500
+Bank_Level_Parallism = 1.695688
+Bank_Level_Parallism_Col = 1.245500
+Bank_Level_Parallism_Ready = 1.000636
+write_to_read_ratio_blp_rw_average = 0.000187
+GrpLevelPara = 1.147623 
+
+BW Util details:
+bwutil = 0.015734 
+total_CMD = 62291876 
+util_bw = 980088 
+Wasted_Col = 1877134 
+Wasted_Row = 1266560 
+Idle = 58168094 
+
+BW Util Bottlenecks: 
+RCDc_limit = 2074216 
+RCDWRc_limit = 114 
+WTRc_limit = 341 
+RTWc_limit = 344 
+CCDLc_limit = 316837 
+rwq = 0 
+CCDLc_limit_alone = 316739 
+WTRc_limit_alone = 292 
+RTWc_limit_alone = 295 
+
+Commands details: 
+total_CMD = 62291876 
+n_nop = 61506003 
+Read = 489980 
+Write = 0 
+L2_Alloc = 0 
+L2_WB = 64 
+n_act = 153000 
+n_pre = 152984 
+n_ref = 0 
+n_req = 489996 
+total_req = 490044 
+
+Dual Bus Interface Util: 
+issued_total_row = 305984 
+issued_total_col = 490044 
+Row_Bus_Util =  0.004912 
+CoL_Bus_Util = 0.007867 
+Either_Row_CoL_Bus_Util = 0.012616 
+Issued_on_Two_Bus_Simul_Util = 0.000163 
+issued_two_Eff = 0.012922 
+queue_avg = 0.051566 
+
+
+dram_util_bins: 0 0 0 0 0 0 0 0 0 0
+dram_eff_bins: 0 0 0 0 0 0 0 0 0 0
+mrqq: max=45 avg=0.0515656
+Memory Partition 5: 
+Cache L2_bank_010:
+MSHR contents
+
+Cache L2_bank_011:
+MSHR contents
+
+In Dram Latency Queue (total = 0): 
+DRAM[5]: 16 bks, busW=4 BL=8 CL=16, tRRD=8 tCCD=2, tRCD=16 tRAS=37 tRP=16 tRC=52
+n_cmd=62291876 n_nop=61504556 n_act=154800 n_pre=154784 n_ref_event=0 n_req=487888 n_rd=487872 n_rd_L2_A=0 n_write=0 n_wr_bk=64 bw_util=0.01567
+n_activity=7531781 dram_eff=0.1296
+bk0: 30500a 61901574i bk1: 30528a 61909290i bk2: 30520a 61895636i bk3: 30528a 61903972i bk4: 30488a 61893325i bk5: 30484a 61900205i bk6: 30488a 61904118i bk7: 30480a 61915095i bk8: 30488a 61892034i bk9: 30488a 61898634i bk10: 30488a 61893996i bk11: 30484a 61904286i bk12: 30480a 61896490i bk13: 30476a 61905708i bk14: 30480a 61906488i bk15: 30472a 61916698i 
+
+------------------------------------------------------------------------
+
+Row_Buffer_Locality = 0.682714
+Row_Buffer_Locality_read = 0.682736
+Row_Buffer_Locality_write = 0.000000
+Bank_Level_Parallism = 1.685881
+Bank_Level_Parallism_Col = 1.243240
+Bank_Level_Parallism_Ready = 1.000365
+write_to_read_ratio_blp_rw_average = 0.000148
+GrpLevelPara = 1.147353 
+
+BW Util details:
+bwutil = 0.015666 
+total_CMD = 62291876 
+util_bw = 975872 
+Wasted_Col = 1903037 
+Wasted_Row = 1300556 
+Idle = 58112411 
+
+BW Util Bottlenecks: 
+RCDc_limit = 2102479 
+RCDWRc_limit = 129 
+WTRc_limit = 245 
+RTWc_limit = 120 
+CCDLc_limit = 314956 
+rwq = 0 
+CCDLc_limit_alone = 314917 
+WTRc_limit_alone = 218 
+RTWc_limit_alone = 108 
+
+Commands details: 
+total_CMD = 62291876 
+n_nop = 61504556 
+Read = 487872 
+Write = 0 
+L2_Alloc = 0 
+L2_WB = 64 
+n_act = 154800 
+n_pre = 154784 
+n_ref = 0 
+n_req = 487888 
+total_req = 487936 
+
+Dual Bus Interface Util: 
+issued_total_row = 309584 
+issued_total_col = 487936 
+Row_Bus_Util =  0.004970 
+CoL_Bus_Util = 0.007833 
+Either_Row_CoL_Bus_Util = 0.012639 
+Issued_on_Two_Bus_Simul_Util = 0.000164 
+issued_two_Eff = 0.012955 
+queue_avg = 0.050787 
+
+
+dram_util_bins: 0 0 0 0 0 0 0 0 0 0
+dram_eff_bins: 0 0 0 0 0 0 0 0 0 0
+mrqq: max=30 avg=0.050787
+Memory Partition 6: 
+Cache L2_bank_012:
+MSHR contents
+
+Cache L2_bank_013:
+MSHR contents
+
+In Dram Latency Queue (total = 0): 
+DRAM[6]: 16 bks, busW=4 BL=8 CL=16, tRRD=8 tCCD=2, tRCD=16 tRAS=37 tRP=16 tRC=52
+n_cmd=62291876 n_nop=61512657 n_act=150677 n_pre=150661 n_ref_event=0 n_req=488340 n_rd=488324 n_rd_L2_A=0 n_write=0 n_wr_bk=64 bw_util=0.01568
+n_activity=7440553 dram_eff=0.1313
+bk0: 30504a 61887352i bk1: 30568a 61940897i bk2: 30524a 61881996i bk3: 30588a 61934103i bk4: 30480a 61880645i bk5: 30564a 61932567i bk6: 30472a 61893740i bk7: 30548a 61942730i bk8: 30484a 61880642i bk9: 30556a 61930187i bk10: 30488a 61880220i bk11: 30544a 61933041i bk12: 30472a 61880546i bk13: 30536a 61934382i bk14: 30464a 61896168i bk15: 30532a 61947271i 
+
+------------------------------------------------------------------------
+
+Row_Buffer_Locality = 0.691451
+Row_Buffer_Locality_read = 0.691473
+Row_Buffer_Locality_write = 0.000000
+Bank_Level_Parallism = 1.698397
+Bank_Level_Parallism_Col = 1.247007
+Bank_Level_Parallism_Ready = 1.000395
+write_to_read_ratio_blp_rw_average = 0.000166
+GrpLevelPara = 1.150037 
+
+BW Util details:
+bwutil = 0.015681 
+total_CMD = 62291876 
+util_bw = 976776 
+Wasted_Col = 1847284 
+Wasted_Row = 1248550 
+Idle = 58219266 
+
+BW Util Bottlenecks: 
+RCDc_limit = 2039119 
+RCDWRc_limit = 120 
+WTRc_limit = 296 
+RTWc_limit = 210 
+CCDLc_limit = 318202 
+rwq = 0 
+CCDLc_limit_alone = 318123 
+WTRc_limit_alone = 252 
+RTWc_limit_alone = 175 
+
+Commands details: 
+total_CMD = 62291876 
+n_nop = 61512657 
+Read = 488324 
+Write = 0 
+L2_Alloc = 0 
+L2_WB = 64 
+n_act = 150677 
+n_pre = 150661 
+n_ref = 0 
+n_req = 488340 
+total_req = 488388 
+
+Dual Bus Interface Util: 
+issued_total_row = 301338 
+issued_total_col = 488388 
+Row_Bus_Util =  0.004838 
+CoL_Bus_Util = 0.007840 
+Either_Row_CoL_Bus_Util = 0.012509 
+Issued_on_Two_Bus_Simul_Util = 0.000169 
+issued_two_Eff = 0.013484 
+queue_avg = 0.055150 
+
+
+dram_util_bins: 0 0 0 0 0 0 0 0 0 0
+dram_eff_bins: 0 0 0 0 0 0 0 0 0 0
+mrqq: max=24 avg=0.0551501
+Memory Partition 7: 
+Cache L2_bank_014:
+MSHR contents
+
+Cache L2_bank_015:
+MSHR contents
+
+In Dram Latency Queue (total = 0): 
+DRAM[7]: 16 bks, busW=4 BL=8 CL=16, tRRD=8 tCCD=2, tRCD=16 tRAS=37 tRP=16 tRC=52
+n_cmd=62291876 n_nop=61506552 n_act=153215 n_pre=153199 n_ref_event=0 n_req=489452 n_rd=489436 n_rd_L2_A=0 n_write=0 n_wr_bk=64 bw_util=0.01572
+n_activity=7451337 dram_eff=0.1314
+bk0: 30548a 61923279i bk1: 30668a 61889883i bk2: 30556a 61921847i bk3: 30680a 61886323i bk4: 30512a 61918428i bk5: 30648a 61882091i bk6: 30512a 61930150i bk7: 30648a 61893619i bk8: 30528a 61914426i bk9: 30648a 61878628i bk10: 30524a 61916313i bk11: 30648a 61883932i bk12: 30520a 61919180i bk13: 30640a 61885249i bk14: 30520a 61931094i bk15: 30636a 61898931i 
+
+------------------------------------------------------------------------
+
+Row_Buffer_Locality = 0.686966
+Row_Buffer_Locality_read = 0.686989
+Row_Buffer_Locality_write = 0.000000
+Bank_Level_Parallism = 1.704517
+Bank_Level_Parallism_Col = 1.247954
+Bank_Level_Parallism_Ready = 1.000470
+write_to_read_ratio_blp_rw_average = 0.000179
+GrpLevelPara = 1.151251 
+
+BW Util details:
+bwutil = 0.015716 
+total_CMD = 62291876 
+util_bw = 979000 
+Wasted_Col = 1874347 
+Wasted_Row = 1265846 
+Idle = 58172683 
+
+BW Util Bottlenecks: 
+RCDc_limit = 2073789 
+RCDWRc_limit = 119 
+WTRc_limit = 266 
+RTWc_limit = 224 
+CCDLc_limit = 317395 
+rwq = 0 
+CCDLc_limit_alone = 317345 
+WTRc_limit_alone = 250 
+RTWc_limit_alone = 190 
+
+Commands details: 
+total_CMD = 62291876 
+n_nop = 61506552 
+Read = 489436 
+Write = 0 
+L2_Alloc = 0 
+L2_WB = 64 
+n_act = 153215 
+n_pre = 153199 
+n_ref = 0 
+n_req = 489452 
+total_req = 489500 
+
+Dual Bus Interface Util: 
+issued_total_row = 306414 
+issued_total_col = 489500 
+Row_Bus_Util =  0.004919 
+CoL_Bus_Util = 0.007858 
+Either_Row_CoL_Bus_Util = 0.012607 
+Issued_on_Two_Bus_Simul_Util = 0.000170 
+issued_two_Eff = 0.013485 
+queue_avg = 0.051198 
+
+
+dram_util_bins: 0 0 0 0 0 0 0 0 0 0
+dram_eff_bins: 0 0 0 0 0 0 0 0 0 0
+mrqq: max=22 avg=0.0511981
+
+icnt_total_pkts_mem_to_simt=24118272
+icnt_total_pkts_simt_to_mem=24118272
+LD_mem_lat_dist  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ST_mem_lat_dist  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+
+gpgpu_simulation_time = 0 days, 2 hrs, 3 min, 11 sec (7391 sec)
+gpgpu_simulation_rate = 21869 (inst/sec)
+gpgpu_simulation_rate = 3280 (cycle/sec)
+gpgpu_silicon_slowdown = 451219x
+GPGPU-Sim: synchronize waiting for inactive GPU simulation
+GPGPU-Sim API: Stream Manager State
+GPGPU-Sim: detected inactive GPU simulation thread
+GPU Runtime: 7386.568682s
+CPU Runtime: 0.133462s
+Non-Matching CPU-GPU Outputs Beyond Error Threshold of 0.50 Percent: 0
+GPGPU-Sim: *** exit detected ***

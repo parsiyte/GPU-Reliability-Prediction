@@ -1,0 +1,5 @@
+ptxas info    : 0 bytes gmem
+ptxas info    : Compiling entry function '_Z12syr2k_kernelPfS_S_' for 'sm_52'
+ptxas info    : Function properties for _Z12syr2k_kernelPfS_S_
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 25 registers, 344 bytes cmem[0]

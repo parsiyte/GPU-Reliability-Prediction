@@ -1,0 +1,115 @@
+
+
+
+
+
+
+
+
+.version 7.0
+.target sm_52
+.address_size 64
+
+
+
+.visible .entry _Z11gemm_kernelPfS_S_(
+.param .u64 _Z11gemm_kernelPfS_S__param_0,
+.param .u64 _Z11gemm_kernelPfS_S__param_1,
+.param .u64 _Z11gemm_kernelPfS_S__param_2
+)
+{
+.reg .pred %p<5>;
+.reg .f32 %f<37>;
+.reg .b32 %r<22>;
+.reg .b64 %rd<16>;
+
+
+ld.param.u64 %rd7, [_Z11gemm_kernelPfS_S__param_0];
+ld.param.u64 %rd8, [_Z11gemm_kernelPfS_S__param_1];
+ld.param.u64 %rd9, [_Z11gemm_kernelPfS_S__param_2];
+mov.u32 %r1, %ntid.x;
+mov.u32 %r2, %ctaid.x;
+mov.u32 %r3, %tid.x;
+mad.lo.s32 %r20, %r1, %r2, %r3;
+mov.u32 %r5, %ntid.y;
+mov.u32 %r6, %ctaid.y;
+mov.u32 %r7, %tid.y;
+mad.lo.s32 %r8, %r5, %r6, %r7;
+setp.lt.s32	%p1, %r8, 512;
+setp.lt.s32	%p2, %r20, 512;
+and.pred %p3, %p1, %p2;
+@!%p3 bra BB0_3;
+bra.uni BB0_1;
+
+BB0_1:
+cvta.to.global.u64 %rd1, %rd8;
+cvta.to.global.u64 %rd10, %rd9;
+shl.b32 %r15, %r8, 9;
+add.s32 %r16, %r15, %r20;
+mul.wide.s32 %rd11, %r16, 4;
+add.s64 %rd2, %rd10, %rd11;
+ld.global.f32 %f4, [%rd2];
+mul.f32 %f36, %f4, 0f4504B000;
+st.global.f32 [%rd2], %f36;
+mul.lo.s32 %r17, %r5, %r6;
+shl.b32 %r18, %r17, 9;
+mad.lo.s32 %r19, %r7, 512, %r18;
+mul.wide.s32 %rd3, %r19, 4;
+cvta.to.global.u64 %rd15, %rd7;
+mov.u32 %r21, -512;
+
+BB0_2:
+add.s64 %rd12, %rd15, %rd3;
+ld.global.f32 %f5, [%rd12];
+mul.f32 %f6, %f5, 0f46FD3800;
+mul.wide.s32 %rd13, %r20, 4;
+add.s64 %rd14, %rd1, %rd13;
+ld.global.f32 %f7, [%rd14];
+fma.rn.f32 %f8, %f6, %f7, %f36;
+st.global.f32 [%rd2], %f8;
+ld.global.f32 %f9, [%rd12+4];
+mul.f32 %f10, %f9, 0f46FD3800;
+ld.global.f32 %f11, [%rd14+2048];
+fma.rn.f32 %f12, %f10, %f11, %f8;
+st.global.f32 [%rd2], %f12;
+ld.global.f32 %f13, [%rd12+8];
+mul.f32 %f14, %f13, 0f46FD3800;
+ld.global.f32 %f15, [%rd14+4096];
+fma.rn.f32 %f16, %f14, %f15, %f12;
+st.global.f32 [%rd2], %f16;
+ld.global.f32 %f17, [%rd12+12];
+mul.f32 %f18, %f17, 0f46FD3800;
+ld.global.f32 %f19, [%rd14+6144];
+fma.rn.f32 %f20, %f18, %f19, %f16;
+st.global.f32 [%rd2], %f20;
+ld.global.f32 %f21, [%rd12+16];
+mul.f32 %f22, %f21, 0f46FD3800;
+ld.global.f32 %f23, [%rd14+8192];
+fma.rn.f32 %f24, %f22, %f23, %f20;
+st.global.f32 [%rd2], %f24;
+ld.global.f32 %f25, [%rd12+20];
+mul.f32 %f26, %f25, 0f46FD3800;
+ld.global.f32 %f27, [%rd14+10240];
+fma.rn.f32 %f28, %f26, %f27, %f24;
+st.global.f32 [%rd2], %f28;
+ld.global.f32 %f29, [%rd12+24];
+mul.f32 %f30, %f29, 0f46FD3800;
+ld.global.f32 %f31, [%rd14+12288];
+fma.rn.f32 %f32, %f30, %f31, %f28;
+st.global.f32 [%rd2], %f32;
+ld.global.f32 %f33, [%rd12+28];
+mul.f32 %f34, %f33, 0f46FD3800;
+ld.global.f32 %f35, [%rd14+14336];
+fma.rn.f32 %f36, %f34, %f35, %f32;
+st.global.f32 [%rd2], %f36;
+add.s32 %r20, %r20, 4096;
+add.s64 %rd15, %rd15, 32;
+add.s32 %r21, %r21, 8;
+setp.ne.s32	%p4, %r21, 0;
+@%p4 bra BB0_2;
+
+BB0_3:
+ret;
+}
+
+

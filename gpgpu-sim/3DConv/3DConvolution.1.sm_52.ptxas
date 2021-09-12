@@ -1,0 +1,5 @@
+ptxas info    : 0 bytes gmem
+ptxas info    : Compiling entry function '_Z20convolution3D_kernelPfS_i' for 'sm_52'
+ptxas info    : Function properties for _Z20convolution3D_kernelPfS_i
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 19 registers, 340 bytes cmem[0]
