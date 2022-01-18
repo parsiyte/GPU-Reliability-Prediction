@@ -1,13 +1,13 @@
 # FaultPredictionOnGPGPUs
 
-This repository includes the experiment materials and resutls for the soft error vulnerability study for GPGPU applications. 
- - **BenchmarkGPGPUApplications** folder includes the benchmark applications used in the experiments. These applications belongs to the PolyBench benchmark suite.
+This repository includes the experiment materials and results for the soft error vulnerability study for GPGPU applications. 
+ - **BenchmarkGPGPUApplications** folder includes the benchmark applications used in the experiments. These applications belong to the PolyBench benchmark suite.
  - **gpgpu-sim** folder includes the simulation results of benchmark applications.
- - **with_GPGPUsim** and **with-Nsight** folders include prediction results for the fault rates obtained with GPGPU-Sim 4.0 metrics and Nsight Compute Tool metrics respectively. 
+ - **with_GPGPUsim** and **with-Nsight** folders include prediction results for the fault rates obtained with GPGPU-Sim 4.0 metrics and Nsight Compute Tool metrics, respectively. 
  - **plots** folder includes resultant plots for correlation results among features, between features and fault rates and prediction results.
  - **data_metrics_GPUsim.xls** and **data_metrics_NSC.xls** files include profiling metrics obtained from GPGPU-Sim and Nsight Compute tool.
 
-**Required Python Libraries:** One can use the last versions for each library.
+**Required Python Libraries:** One can use the last versions of each library.
  - pandas
  - numpy
  - csv
@@ -51,8 +51,8 @@ There are three types of faults examined in this study:
   2 - Silent Data Corruptions (SDCs)
   3 - Masked Faults
   
-To predict the crash and masked fault rates different classification methods is used while regression method is used to predict masked fault rates. 
-Further details for the approaches used in the prediction studies, collected metrics and feature selection is examined in the paper which will be published soon. 
+To predict the crash and masked fault rates, different classification methods is used, while regression method is used to predict masked fault rates. 
+Further details for the approaches used in the prediction studies, collected metrics, and feature selection stages are examined in our paper published soon. 
 
 
 
