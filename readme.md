@@ -25,19 +25,24 @@ The arg can be:
 
 **$** python3 plotsCorrelatorFaults.py --arg1 --arg2 --arg3
 For the classification experiments: 
---arg1:  1) --gpgpu-sim -> prediction experiments obtained with gpgpu-sim metrics
-         2) --nsight-compute -> prediction experiments obtained with nsight-compute metrics
---arg2:  1) --crash -> crash classification results
-         2) --sdc -> sdc classification results
---arg3:  1) --all_features -> prediction study with all features
-         2) --sel_features -> prediction study with selected features
+ - --arg1:
+ 1) --gpgpu-sim -> prediction experiments obtained with gpgpu-sim metrics
+ 2) --nsight-compute -> prediction experiments obtained with nsight-compute metrics
+ - --arg2:  
+ 1) --crash -> crash classification results
+ 2) --sdc -> sdc classification results
+ - --arg3:
+ 1) --all_features -> prediction study with all features
+ 2) --sel_features -> prediction study with selected features
 
 **$** python3 plotsCorrelatorFaults.py --arg1 --arg2
 For the regression experiments experiments: 
---arg1: 1) --gpgpu-sim -> prediction experiments obtained with gpgpu-sim metrics
-        2) --nsight-compute -> prediction experiments obtained with nsight compute tool metrics
---arg2: 1) --masked -> prediction experiment for masked faults
-        2) --others -> prediction experiment for SDCs and crashes
+ - --arg1: 
+ 1) --gpgpu-sim -> prediction experiments obtained with gpgpu-sim metrics
+ 2) --nsight-compute -> prediction experiments obtained with nsight compute tool metrics
+ - --arg2: 
+ 1) --masked -> prediction experiment for masked faults
+ 2) --others -> prediction experiment for SDCs and crashes
 
 
 There are three types of faults examined in this study:
