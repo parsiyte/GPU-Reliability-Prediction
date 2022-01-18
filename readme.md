@@ -5,6 +5,7 @@ This repository includes the experiment materials and resutls for the soft error
  - **gpgpu-sim** folder includes the simulation results of benchmark applications.
  - **with_GPGPUsim** and **with-Nsight** folders include prediction results for the fault rates obtained with GPGPU-Sim 4.0 metrics and Nsight Compute Tool metrics respectively. 
  - **plots** folder includes resultant plots for correlation results among features, between features and fault rates and prediction results.
+ - **data_metrics_GPUsim.xls** and **data_metrics_NSC.xls** files include profiling metrics obtained from GPGPU-Sim and Nsight Compute tool.
 
 **Required Python Libraries:** One can use the last versions for each library.
  - pandas
@@ -25,22 +26,22 @@ The arg can be:
 
 **$** python3 plotsCorrelatorFaults.py --arg1 --arg2 --arg3
 For the classification experiments: 
- - --arg1:
+ - **--arg1:**
  1) --gpgpu-sim -> prediction experiments obtained with gpgpu-sim metrics
  2) --nsight-compute -> prediction experiments obtained with nsight-compute metrics
- - --arg2:  
+ - **--arg2:**
  1) --crash -> crash classification results
  2) --sdc -> sdc classification results
- - --arg3:
+ - **--arg3:**
  1) --all_features -> prediction study with all features
  2) --sel_features -> prediction study with selected features
 
 **$** python3 plotsCorrelatorFaults.py --arg1 --arg2
 For the regression experiments experiments: 
- - --arg1: 
+ - **--arg1:** 
  1) --gpgpu-sim -> prediction experiments obtained with gpgpu-sim metrics
  2) --nsight-compute -> prediction experiments obtained with nsight compute tool metrics
- - --arg2: 
+ - **--arg2:** 
  1) --masked -> prediction experiment for masked faults
  2) --others -> prediction experiment for SDCs and crashes
 
