@@ -19,12 +19,14 @@ This repository includes the experiment materials and results for the soft error
 
 **To run the experiments:**
 **--**$ python3 plotsCorrelatorFaults.py --arg
+
 The arg can be:
  1) --fault_rates_plot -> this will plot fault rates for each of the fault type
  2) --corr_results_heat_map -> this will plot the correlation results (Spearman and Pearson) among the features and faults 
  3) --corr_results_features_and_faults -> this plot the same correlation results between faults and features.
 
 **$** python3 plotsCorrelatorFaults.py --arg1 --arg2 --arg3
+
 For the classification experiments: 
  - **--arg1:**
  1) --gpgpu-sim -> prediction experiments obtained with gpgpu-sim metrics
@@ -37,6 +39,7 @@ For the classification experiments:
  2) --sel_features -> prediction study with selected features
 
 **$** python3 plotsCorrelatorFaults.py --arg1 --arg2
+
 For the regression experiments experiments: 
  - **--arg1:** 
  1) --gpgpu-sim -> prediction experiments obtained with gpgpu-sim metrics
